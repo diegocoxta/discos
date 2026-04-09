@@ -1,0 +1,40 @@
+.container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+  transition: transform 0.3s ease;
+  overflow-y: clip;
+  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+.sleeve {
+  background-size: cover;
+  background-position: center;
+  z-index: 2;
+  position: relative;
+  background-color: #efefef;
+  border-radius: 4px;
+}
+
+.vinyl {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  transition: transform 0.5s ease-out;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  align-items: center;
+
+  > div {
+    box-shadow: 6 0 10px -5 rgba(0, 0, 0, 0.8);
+  }
+}
+
+.container:hover .vinyl {
+  transform: translateX(150px) rotate(-10deg);
+}
