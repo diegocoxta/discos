@@ -1,0 +1,71 @@
+.container {
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.7s ease;
+  background-image:
+    repeating-radial-gradient(
+      circle,
+      transparent 0,
+      transparent 2px,
+      rgba(0, 0, 0, 0.15) 3px,
+      rgba(0, 0, 0, 0.25) 4px
+    ),
+    conic-gradient(
+      from 45deg,
+      rgba(255, 255, 255, 0.1) 0%,
+      rgba(255, 255, 255, 0.3) 15%,
+      rgba(255, 255, 255, 0.1) 30%,
+      transparent 50%,
+      rgba(255, 255, 255, 0.1) 50%,
+      rgba(255, 255, 255, 0.3) 65%,
+      rgba(255, 255, 255, 0.1) 80%,
+      transparent 100%
+    );
+}
+
+.playing {
+  animation: spin 4s linear infinite;
+}
+
+.branding {
+  position: relative;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  border: 1px solid rgba(0, 0, 0, 0.3);
+  width: 33%;
+  height: 33%;
+  background-color: #e5e7eb;
+}
+
+.cover {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hole {
+  position: absolute;
+  border-radius: 50%;
+  background-color: #000;
+  box-shadow: inset 0 2px 4px 0 rgba(0, 0, 0, 0.5);
+  width: 6%;
+  height: 6%;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
