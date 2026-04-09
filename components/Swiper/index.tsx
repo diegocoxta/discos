@@ -56,7 +56,7 @@ export default function Swiper({ records = [] }: SwiperProps) {
       return {
         zIndex: 100 - absOffset,
         // Cai para baixo da imagem ativa (280px) e cria uma lombada de 12px por item
-        transform: `translateY(${280 + absOffset * 12}px) scale(${1 - absOffset * 0.02})`,
+        transform: `translateY(${200 + absOffset * 12}px) rotateX(-80deg) scale(${1 - absOffset * 0.02})`,
         opacity: 1,
       };
     }
@@ -66,6 +66,15 @@ export default function Swiper({ records = [] }: SwiperProps) {
 
   return (
     <div className={styles.wrapper}>
+      {/* Metadados do Disco Ativo */}
+      {activeRecord && (
+        <div className={styles.infoArea} key={activeRecord.id}>
+          <p className={styles.artist}>{activeRecord.artist}</p>
+          <h2 className={styles.title}>{activeRecord.title}</h2>
+          <p className={styles.year}>{activeRecord.year}</p>
+        </div>
+      )}
+
       {/* Container Principal da Animação */}
       <div className={styles.carouselContainer}>
         <button
@@ -103,15 +112,6 @@ export default function Swiper({ records = [] }: SwiperProps) {
           &#10095; {/* Seta Direita HTML entity */}
         </button>
       </div>
-
-      {/* Metadados do Disco Ativo */}
-      {activeRecord && (
-        <div className={styles.infoArea} key={activeRecord.id}>
-          <p className={styles.artist}>{activeRecord.artist}</p>
-          <h2 className={styles.title}>{activeRecord.title}</h2>
-          <p className={styles.year}>{activeRecord.year}</p>
-        </div>
-      )}
     </div>
   );
 }
