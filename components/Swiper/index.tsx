@@ -66,15 +66,6 @@ export default function Swiper({ records = [] }: SwiperProps) {
 
   return (
     <div className={styles.wrapper}>
-      {/* Metadados do Disco Ativo */}
-      {activeRecord && (
-        <div className={styles.infoArea} key={activeRecord.id}>
-          <p className={styles.artist}>{activeRecord.artist}</p>
-          <h2 className={styles.title}>{activeRecord.title}</h2>
-          <p className={styles.year}>{activeRecord.year}</p>
-        </div>
-      )}
-
       {/* Container Principal da Animação */}
       <div className={styles.carouselContainer}>
         <button
@@ -85,23 +76,34 @@ export default function Swiper({ records = [] }: SwiperProps) {
           &#10094; {/* Seta Esquerda HTML entity */}
         </button>
 
-        <div className={styles.stackArea}>
-          {records.map((record, index) => (
-            <div
-              key={record.id || index}
-              className={styles.card}
-              style={getCardStyle(index) as React.CSSProperties}
-              // Permite clicar em um disco da pilha de cima para avançar direto pra ele
-              onClick={() => index > currentIndex && setCurrentIndex(index)}
-            >
-              <Image
-                src={record.cover}
-                alt={record.title}
-                className={styles.coverImage}
-                fill
-              />
+        <div className={styles.content}>
+          <div className={styles.stackArea}>
+            {records.map((record, index) => (
+              <div
+                key={record.id || index}
+                className={styles.card}
+                style={getCardStyle(index) as React.CSSProperties}
+                // Permite clicar em um disco da pilha de cima para avançar direto pra ele
+                onClick={() => index > currentIndex && setCurrentIndex(index)}
+              >
+                <Image
+                  src={record.cover}
+                  alt={record.title}
+                  className={styles.coverImage}
+                  fill
+                />
+              </div>
+            ))}
+          </div>
+
+          {/* Metadados do Disco Ativo */}
+          {activeRecord && (
+            <div className={styles.infoArea} key={activeRecord.id}>
+              <p className={styles.artist}>{activeRecord.artist}</p>
+              <h2 className={styles.title}>{activeRecord.title}</h2>
+              <p className={styles.year}>{activeRecord.year}</p>
             </div>
-          ))}
+          )}
         </div>
 
         <button

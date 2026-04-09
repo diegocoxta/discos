@@ -31,7 +31,8 @@ export default function Sleeve(props: SleeveProps) {
       style={
         {
           "--sleeve-opened-effect": `translateX(${size * 0.5}px) rotate(-10deg)`,
-          ...sizes,
+          width: `${isOpened ? size * 1.5 : size}px`,
+          height: `${size}px`,
         } as React.CSSProperties
       }
     >
@@ -40,7 +41,8 @@ export default function Sleeve(props: SleeveProps) {
         style={
           {
             backgroundImage: `url(${src})`,
-            ...sizes,
+            width: `${size}px`,
+            height: `${size}px`,
           } as React.CSSProperties
         }
       />

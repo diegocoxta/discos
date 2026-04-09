@@ -77,6 +77,7 @@ export default function Home() {
         </Separator>
         <Separator title="Component: Sleeve (with custom color, size and opened state)">
           <Sleeve color="#428A79" size={200} isOpened {...minhaColecao[0]} />
+          <Sleeve size={200} isOpened {...minhaColecao[1]} />
         </Separator>
 
         <Separator title="Component: Box (with custom color, size and different records)">

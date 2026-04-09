@@ -3,9 +3,14 @@
   flex-direction: column;
   align-items: center;
   width: 100%;
-  max-width: 600px;
+  max-width: 800px;
   margin: 0 auto;
   font-family: sans-serif;
+  height: 610px;
+
+  @media (min-width: 768px) {
+    padding-top: 100px;
+  }
 }
 
 .carouselContainer {
@@ -17,6 +22,20 @@
   margin-bottom: 2rem;
 }
 
+.content {
+  display: flex;
+  flex-direction: column-reverse;
+  width: 100%;
+  align-items: center;
+
+  @media (min-width: 768px) {
+    flex-direction: row;
+    display: flex;
+    align-items: flex-end;
+    width: 80%;
+  }
+}
+
 .stackArea {
   position: relative;
   width: 300px;
@@ -25,6 +44,12 @@
   align-items: center;
   justify-content: center;
   perspective: 400px;
+
+  padding-top: 250px;
+
+  @media (min-width: 768px) {
+    padding-top: 0;
+  }
 }
 
 /* Estilo individual de cada Capa de Disco */
@@ -108,9 +133,13 @@
 
 /* Seção de Informações (Metadados) */
 .infoArea {
-  text-align: center;
   animation: fadeIn 0.5s ease;
-  height: 240px;
+  text-align: center;
+
+  @media (min-width: 768px) {
+    margin-left: 40px;
+    text-align: left;
+  }
 }
 
 .artist {
