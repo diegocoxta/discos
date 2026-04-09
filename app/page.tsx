@@ -5,6 +5,7 @@ import Vinyl, { RecordType } from "@/components/Vinyl";
 import Shelf from "@/components/Shelf";
 import Box from "@/components/Box";
 import Swiper from "@/components/Swiper";
+import Separator from "@/components/Separator";
 
 export default function Home() {
   const minhaColecao: RecordType[] = [
@@ -54,24 +55,43 @@ export default function Home() {
       year: "2021",
       color: "#428A79",
     },
+    {
+      id: "7",
+      cover: "/covers/juan-luis-guerra-romance-rosa.jpg",
+      artist: "Pekka Pohjola",
+      title: "Space Waltz",
+      year: "1985",
+    },
   ];
 
   return (
     <div className={styles.page}>
       <main className={styles.main}>
-        <Swiper records={minhaColecao} />
+        <Separator title="Component: Vinyl (and variants with custom color, isPlaying and size)">
+          <Vinyl {...minhaColecao[1]} />
+          <Vinyl color="#428A79" size={200} isPlaying {...minhaColecao[0]} />
+        </Separator>
 
-        <Sleeve size={200} {...minhaColecao[1]} />
-        <Sleeve color="#428A79" isOpened {...minhaColecao[0]} />
-        <Vinyl size={280} isPlaying {...minhaColecao[1]} />
+        <Separator title="Component: Sleeve">
+          <Sleeve {...minhaColecao[1]} />
+        </Separator>
+        <Separator title="Component: Sleeve (with custom color, size and opened state)">
+          <Sleeve color="#428A79" size={200} isOpened {...minhaColecao[0]} />
+        </Separator>
 
-        <Shelf stackOrder="first-on-top" size={200} records={minhaColecao} />
+        <Separator title="Component: Box (with custom color, size and different records)">
+          <Box size={100} color="#339ee5" records={minhaColecao} />
+          <Box size={100} color="#a4e533" records={minhaColecao.slice(4, 7)} />
+          <Box size={100} color="#e533ca" records={minhaColecao} />
+        </Separator>
 
-        <Box
-          size={100}
-          color="#339ee5" // Aquele verde limão que você testou
-          records={minhaColecao}
-        />
+        <Separator title="Component: Self">
+          <Shelf stackOrder="first-on-top" size={200} records={minhaColecao} />
+        </Separator>
+
+        <Separator title="Component: Swiper">
+          <Swiper records={minhaColecao} />
+        </Separator>
       </main>
     </div>
   );
