@@ -1,14 +1,17 @@
 "use client";
 
-import React, { useState } from "react";
+import { useState } from "react";
+import Image from "next/image";
+
+import { RecordType } from "@/components/Vinyl";
+
 import styles from "./styles.module.css";
 
-/**
- * Componente Swiper reproduz o efeito de pilha interativa com navegação.
- * * @param {object} props
- * @param {Array<{id: string, cover: string, artist: string, title: string, year: string}>} props.records
- */
-export default function Swiper({ records = [] }) {
+interface SwiperProps {
+  records: RecordType[];
+}
+
+export default function Swiper({ records = [] }: SwiperProps) {
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleNext = () => {
@@ -26,7 +29,7 @@ export default function Swiper({ records = [] }) {
   const activeRecord = records[currentIndex];
 
   // Função central que calcula a posição 3D de cada carta
-  const getCardStyle = (index) => {
+  const getCardStyle = (index: number) => {
     const offset = index - currentIndex;
     const absOffset = Math.abs(offset);
 
@@ -78,14 +81,15 @@ export default function Swiper({ records = [] }) {
             <div
               key={record.id || index}
               className={styles.card}
-              style={getCardStyle(index)}
+              style={getCardStyle(index) as React.CSSProperties}
               // Permite clicar em um disco da pilha de cima para avançar direto pra ele
               onClick={() => index > currentIndex && setCurrentIndex(index)}
             >
-              <img
+              <Image
                 src={record.cover}
                 alt={record.title}
                 className={styles.coverImage}
+                fill
               />
             </div>
           ))}
