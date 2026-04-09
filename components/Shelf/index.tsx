@@ -28,12 +28,10 @@ export default function Shelf(props: ShelfProps) {
             className={`${styles.item} ${shadowClass}`}
             style={{ zIndex: currentZIndex }}
           >
-            <div className={styles.details}>
-              {record.title && <p className={styles.tooltip}>{record.title}</p>}
-              {record.artist && (
-                <p className={styles.tooltip}>{record.artist}</p>
-              )}
-              {record.year && <p className={styles.tooltip}>{record.year}</p>}
+            <div className={styles.tooltip}>
+              {record.title && <h3>{record.title}</h3>}
+              {record.artist && <p>{record.artist}</p>}
+              {record.year && <span>{record.year}</span>}
             </div>
             <Sleeve size={size} {...record} />
           </div>

@@ -5,7 +5,6 @@
   align-items: center;
   width: 100%;
   padding-top: 100px;
-  background-color: rgb(0, 255, 60);
 }
 
 .item {
@@ -52,36 +51,19 @@
 
 .tooltip {
   position: absolute;
-  top: -45px; /* Joga o texto para cima da capa */
+  top: -70px;
   left: 50%;
   /* Centraliza no eixo X e desce um pouquinho para o efeito de entrada */
   transform: translateX(-50%) translateY(10px);
-
-  background-color: rgba(17, 17, 17, 0.9);
-  color: #fff;
-  padding: 8px 16px;
-  border-radius: 6px;
+  color: #000;
   font-size: 14px;
-  font-weight: 600;
   white-space: nowrap; /* Impede que o texto quebre em várias linhas */
   pointer-events: none; /* Importante: Impede que o tooltip roube o mouse do hover */
+  text-align: center;
 
   /* Escondido por padrão */
   opacity: 0;
   visibility: hidden;
   transition: all 0.3s cubic-bezier(0.25, 1, 0.5, 1);
   z-index: 10;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
-}
-
-/* Setinha inferior do tooltip (triângulo) */
-.tooltip::after {
-  content: "";
-  position: absolute;
-  bottom: -5px;
-  left: 50%;
-  transform: translateX(-50%);
-  border-width: 5px 5px 0;
-  border-style: solid;
-  border-color: rgba(17, 17, 17, 0.9) transparent transparent transparent;
 }
