@@ -1,9 +1,16 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
 
-export interface VinylProps {
+export interface RecordType {
+  id: string;
   cover: string;
+  title: string;
+  artist: string;
+  year: string;
   color?: string;
+}
+
+interface VinylProps extends Pick<RecordType, "cover" | "color"> {
   isPlaying?: boolean;
   size?: number;
 }
