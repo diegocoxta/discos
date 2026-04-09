@@ -1,16 +1,16 @@
 import { getImageProps } from "next/image";
 
-import Vinyl, { VinylProps } from "../Vinyl";
+import Vinyl, { RecordType } from "@/components/Vinyl";
 
 import styles from "./styles.module.css";
 
-interface SleeveProps extends Pick<VinylProps, "color"> {
-  cover: string;
+interface SleeveProps extends Pick<RecordType, "cover" | "color"> {
   size?: number;
+  isOpened?: boolean;
 }
 
 export default function Sleeve(props: SleeveProps) {
-  const { cover, size = 300, color } = props;
+  const { cover, size = 300, color, isOpened } = props;
 
   const {
     props: { src },
@@ -25,13 +25,24 @@ export default function Sleeve(props: SleeveProps) {
   const sizes = { width: `${size}px`, height: `${size}px` };
 
   return (
-    <div className={styles.container} style={sizes}>
+    <div
+      className={styles.container}
+      data-opened={isOpened}
+      style={
+        {
+          "--sleeve-opened-effect": `translateX(${size * 0.5}px) rotate(-10deg)`,
+          ...sizes,
+        } as React.CSSProperties
+      }
+    >
       <div
         className={styles.sleeve}
-        style={{
-          backgroundImage: `url(${src})`,
-          ...sizes,
-        }}
+        style={
+          {
+            backgroundImage: `url(${src})`,
+            ...sizes,
+          } as React.CSSProperties
+        }
       />
       <div className={styles.vinyl}>
         <Vinyl cover={cover} size={size - 20} color={color} />

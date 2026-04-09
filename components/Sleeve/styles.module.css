@@ -1,12 +1,16 @@
 .container {
   position: relative;
-  display: inline-block;
+  display: block;
   cursor: pointer;
   transition: transform 0.3s ease;
   box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
 
-  &:hover {
-    transform: scale(1.05);
+  &:hover .vinyl {
+    transform: var(--sleeve-opened-effect);
+  }
+
+  &[data-opened="true"] .vinyl {
+    transform: var(--sleeve-opened-effect);
   }
 }
 
@@ -32,8 +36,4 @@
   > div {
     box-shadow: 6 0 10px -5 rgba(0, 0, 0, 0.8);
   }
-}
-
-.container:hover .vinyl {
-  transform: translateX(150px) rotate(-10deg);
 }
