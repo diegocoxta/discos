@@ -1,6 +1,7 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import VinylList from "@/components/VinylList";
+import Footer from "@/components/Footer";
 
 import { getCollection, getWishlist } from "../discogs";
 
@@ -17,6 +18,7 @@ export default async function WishlistPage() {
         }}
       />
       <VinylList list={wishlist.wants} listType="wants" />
+      <Footer />
     </Container>
   );
 }
