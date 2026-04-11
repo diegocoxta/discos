@@ -1,5 +1,5 @@
 import Header from "@/components/Header";
-import List from "@/components/List";
+import VinylList from "@/components/VinylList";
 
 import { getCollection, getWishlist } from "../discogs";
 
@@ -15,7 +15,7 @@ export default async function AppPage() {
           collection: collection.pagination.items,
         }}
       />
-      <List list={wishlist.wants} listType="wants" />
+      <VinylList list={wishlist.wants} listType="wants" />
     </>
   );
 }

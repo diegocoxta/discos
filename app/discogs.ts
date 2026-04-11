@@ -79,26 +79,54 @@ export interface Artist {
   resource_url: string;
 }
 
-export async function getCollection(folderid: number): Promise<
-  ApiResponse & {
-    releases: Release[];
-  }
-> {
-  const request = await fetch(
-    `https://api.discogs.com/users/diegocoxta/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
-    { next: { revalidate: 3600 } },
-  );
+export interface Folder {
+  id: number;
+  name: string;
+  count: number;
+  resource_url: string;
+  releases: Release[];
+}
+
+async function getResource(url: string) {
+  const request = await fetch(`https://api.discogs.com/${url}`, {
+    headers: {
+      Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
+    },
+    next: { revalidate: 3600 * 24 },
+  });
+
   const data = await request.json();
 
   return data;
 }
 
-export async function getWishlist(): Promise<ApiResponse & { wants: Want[] }> {
-  const request = await fetch(
-    "https://api.discogs.com/users/diegocoxta/wants?sort=added&sort_order=desc",
-    { next: { revalidate: 3600 } },
+export async function getCollection(folderid: number): Promise<
+  ApiResponse & {
+    releases: Release[];
+  }
+> {
+  const data = await getResource(
+    `users/diegocoxta/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
   );
-  const data = await request.json();
+
+  return data;
+}
+
+export async function getWishlist(): Promise<ApiResponse & { wants: Want[] }> {
+  const data = await getResource(
+    "users/diegocoxta/wants?sort=added&sort_order=desc",
+  );
+
+  return data;
+}
+
+export async function getFolders(): Promise<{ folders: Folder[] }> {
+  const data = await getResource("users/diegocoxta/collection/folders");
+
+  for (const folder of data.folders) {
+    const releases = await getCollection(folder.id);
+    folder.releases = releases.releases;
+  }
 
   return data;
 }

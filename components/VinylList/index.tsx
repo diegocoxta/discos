@@ -6,12 +6,12 @@ import { colors } from "./colors";
 
 import styles from "./styles.module.css";
 
-interface ListProps {
+interface VinylListProps {
   listType: "collection" | "wants";
   list: Want[] | Release[];
 }
 
-export default function List(props: ListProps) {
+export default function VinylList(props: VinylListProps) {
   return (
     <ul className={styles.list}>
       {props.list.map((record, index: number) => (
