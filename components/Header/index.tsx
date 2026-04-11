@@ -5,12 +5,16 @@ import { usePathname } from "next/navigation";
 
 import styles from "./styles.module.css";
 
-export default function Header() {
+interface HeaderProps {
+  counter: { [key: string]: number };
+}
+
+export default function Header(props: HeaderProps) {
   const pathname = usePathname();
 
   const navLinks = [
-    { name: "Collection", href: "/" },
-    { name: "Wantlist", href: "/wantlist" },
+    { key: "collection", name: "Collection", href: "/" },
+    { key: "wishlist", name: "Wishlist", href: "/wishlist" },
   ];
 
   return (
@@ -28,6 +32,9 @@ export default function Header() {
             >
               <Link href={link.href} className={styles.link}>
                 {link.name}
+                <span className={styles.counter}>
+                  {props.counter[link.key]}
+                </span>
               </Link>
             </li>
           );

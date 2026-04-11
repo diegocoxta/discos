@@ -79,13 +79,13 @@ export interface Artist {
   resource_url: string;
 }
 
-export async function getCollection(): Promise<
+export async function getCollection(folderid: number): Promise<
   ApiResponse & {
     releases: Release[];
   }
 > {
   const request = await fetch(
-    "https://api.discogs.com/users/diegocoxta/collection/folders/0/releases?sort=added&sort_order=desc",
+    `https://api.discogs.com/users/diegocoxta/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
     { next: { revalidate: 3600 } },
   );
   const data = await request.json();
@@ -93,7 +93,7 @@ export async function getCollection(): Promise<
   return data;
 }
 
-export async function getWants(): Promise<ApiResponse & { wants: Want[] }> {
+export async function getWishlist(): Promise<ApiResponse & { wants: Want[] }> {
   const request = await fetch(
     "https://api.discogs.com/users/diegocoxta/wants?sort=added&sort_order=desc",
     { next: { revalidate: 3600 } },

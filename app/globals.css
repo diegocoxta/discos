@@ -1,5 +1,6 @@
 :root {
   --background-color: #fdfdfd;
+  --text-color: #323d4d;
 }
 
 html {
@@ -16,7 +17,7 @@ body {
   min-height: 100%;
   display: flex;
   flex-direction: column;
-  color: #323d4d;
+  color: var(--text-color);
   font-family: Arial, Helvetica, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
