@@ -1,7 +1,8 @@
 import Header from "@/components/Header";
-import List from "@/components/List";
+import VinylList from "@/components/VinylList";
 
 import { getCollection, getWishlist } from "./discogs";
+
 export default async function AppPage() {
   const collection = await getCollection(0);
   const wishlist = await getWishlist();
@@ -14,7 +15,7 @@ export default async function AppPage() {
           collection: collection.pagination.items,
         }}
       />
-      <List list={collection.releases} listType="collection" />
+      <VinylList list={collection.releases} listType="collection" />
     </>
   );
 }

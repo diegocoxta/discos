@@ -21,7 +21,7 @@ export default function Header(props: HeaderProps) {
     <header className={styles.container}>
       <h1 className={styles.logo}>vinyl.</h1>
 
-      <nav className={styles.nav}>
+      <ul className={styles.nav}>
         {navLinks.map((link) => {
           const isActive = pathname === link.href;
 
@@ -39,7 +39,7 @@ export default function Header(props: HeaderProps) {
             </li>
           );
         })}
-      </nav>
+      </ul>
     </header>
   );
 }

@@ -22,8 +22,6 @@ export default function Sleeve(props: SleeveProps) {
     fetchPriority: "high",
   });
 
-  const sizes = { width: `${size}px`, height: `${size}px` };
-
   return (
     <div
       className={styles.container}

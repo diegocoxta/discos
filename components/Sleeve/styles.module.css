@@ -31,8 +31,13 @@
   height: 100%;
   display: flex;
   align-items: center;
+  transform: var(--sleeve-opened-effect);
 
   > div {
     box-shadow: 6 0 10px -5 rgba(0, 0, 0, 0.8);
+  }
+
+  @media (min-width: 768px) {
+    transform: none;
   }
 }

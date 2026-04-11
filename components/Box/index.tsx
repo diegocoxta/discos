@@ -1,18 +1,16 @@
 import Image from "next/image";
 
-import { RecordType } from "@/components/Vinyl";
-
 import styles from "./styles.module.css";
 
 interface BoxProps {
   size?: number;
   color?: string;
-  records?: Pick<RecordType, "cover">[];
+  covers?: string[];
 }
 
 export default function Box(props: BoxProps) {
-  const { size = 200, color = "#f4a6c8", records = [] } = props;
-  const displayRecords = records.slice(0, 3);
+  const { size = 200, color = "#f4a6c8", covers = [] } = props;
+  const displayRecords = covers.slice(0, 3);
   const baseScale = size / 100;
 
   return (
@@ -25,12 +23,12 @@ export default function Box(props: BoxProps) {
       }}
     >
       <div className={styles.coversArea}>
-        {displayRecords.map((record, index) => {
+        {displayRecords.map((cover, index) => {
           return (
             <Image
               key={index}
               fill
-              src={record.cover}
+              src={cover}
               alt={`Vinyl Cover ${index + 1}`}
               className={styles.coverItem}
               style={{
