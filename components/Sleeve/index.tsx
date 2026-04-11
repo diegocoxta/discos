@@ -12,15 +12,19 @@ interface SleeveProps extends Pick<RecordType, "cover" | "color"> {
 export default function Sleeve(props: SleeveProps) {
   const { cover, size = 300, color, isOpened } = props;
 
-  const {
-    props: { src },
-  } = getImageProps({
-    alt: "",
-    src: cover,
-    width: size || 300,
-    height: size || 300,
-    fetchPriority: "high",
-  });
+  let src = "";
+
+  if (cover) {
+    const { props } = getImageProps({
+      alt: "",
+      src: cover,
+      width: size || 300,
+      height: size || 300,
+      fetchPriority: "high",
+    });
+
+    src = props.src;
+  }
 
   return (
     <div

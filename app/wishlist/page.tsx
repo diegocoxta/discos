@@ -4,7 +4,7 @@ import VinylList from "@/components/VinylList";
 
 import { getCollection, getWishlist } from "../discogs";
 
-export default async function AppPage() {
+export default async function WishlistPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
 

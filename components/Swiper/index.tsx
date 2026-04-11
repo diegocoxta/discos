@@ -87,12 +87,14 @@ export default function Swiper({ records = [] }: SwiperProps) {
                 // Permite clicar em um disco da pilha de cima para avançar direto pra ele
                 onClick={() => index > currentIndex && setCurrentIndex(index)}
               >
-                <Image
-                  src={record.cover}
-                  alt={record.title}
-                  className={styles.coverImage}
-                  fill
-                />
+                {record.cover && (
+                  <Image
+                    src={record.cover}
+                    alt={record.title}
+                    className={styles.coverImage}
+                    fill
+                  />
+                )}
               </div>
             ))}
           </div>

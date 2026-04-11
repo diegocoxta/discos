@@ -3,7 +3,7 @@ import styles from "./styles.module.css";
 
 export interface RecordType {
   id: string;
-  cover: string;
+  cover?: string;
   title: string;
   artist: string;
   year: string;

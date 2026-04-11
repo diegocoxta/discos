@@ -5,7 +5,7 @@ import FolderList from "@/components/FolderList";
 
 import { getCollection, getFolders, getWishlist } from "./discogs";
 
-export default async function AppPage() {
+export default async function RootPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
   const folders = await getFolders();
