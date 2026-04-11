@@ -100,7 +100,7 @@ async function getResource(url: string) {
   return data;
 }
 
-export async function getCollection(folderid: number): Promise<
+export async function getCollection(folderid: string): Promise<
   ApiResponse & {
     releases: Release[];
   }
@@ -122,11 +122,6 @@ export async function getWishlist(): Promise<ApiResponse & { wants: Want[] }> {
 
 export async function getFolders(): Promise<{ folders: Folder[] }> {
   const data = await getResource("users/diegocoxta/collection/folders");
-
-  for (const folder of data.folders) {
-    const releases = await getCollection(folder.id);
-    folder.releases = releases.releases;
-  }
 
   return data;
 }
