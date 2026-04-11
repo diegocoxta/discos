@@ -1,15 +1,19 @@
 import Header from "@/components/Header";
 import List from "@/components/List";
 
-import { getCollection } from "./discogs";
-import Box from "@/components/Box";
-
+import { getCollection, getWishlist } from "./discogs";
 export default async function AppPage() {
-  const collection = await getCollection();
+  const collection = await getCollection(0);
+  const wishlist = await getWishlist();
 
   return (
     <>
-      <Header />
+      <Header
+        counter={{
+          wishlist: wishlist.pagination.items,
+          collection: collection.pagination.items,
+        }}
+      />
       <List list={collection.releases} listType="collection" />
     </>
   );
