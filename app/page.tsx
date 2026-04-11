@@ -1,14 +1,17 @@
+import Container from "@/components/Container";
 import Header from "@/components/Header";
 import VinylList from "@/components/VinylList";
+import FolderList from "@/components/FolderList";
 
-import { getCollection, getWishlist } from "./discogs";
+import { getCollection, getFolders, getWishlist } from "./discogs";
 
 export default async function AppPage() {
-  const collection = await getCollection(0);
+  const collection = await getCollection("0");
   const wishlist = await getWishlist();
+  const folders = await getFolders();
 
   return (
-    <>
+    <Container>
       <Header
         counter={{
           wishlist: wishlist.pagination.items,
@@ -16,6 +19,7 @@ export default async function AppPage() {
         }}
       />
       <VinylList list={collection.releases} listType="collection" />
-    </>
+      <FolderList list={folders.folders} />
+    </Container>
   );
 }
