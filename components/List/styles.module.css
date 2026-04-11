@@ -1,0 +1,41 @@
+.list {
+  display: flex;
+  gap: 30px;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 100px 100px 50px 0;
+
+  @media (min-width: 768px) {
+    padding: 100px 50px 100px;
+  }
+}
+
+.item {
+  flex-wrap: wrap;
+  width: 224px;
+  transition: transform 0.2s ease;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+
+  &:hover {
+    transform: translateY(-10px) scale(1.05);
+  }
+}
+
+.title {
+  font-size: 20px;
+  margin-top: 10px;
+}
+
+.artist {
+  font-size: 16px;
+  font-style: italic;
+}
+
+.date {
+  font-size: 12px;
+  margin-top: 5px;
+}

@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import Image from "next/image";
+import { ChevronDown, ChevronUp } from "lucide-react";
 
 import { RecordType } from "@/components/Vinyl";
 
@@ -73,7 +74,7 @@ export default function Swiper({ records = [] }: SwiperProps) {
           onClick={handlePrev}
           disabled={currentIndex === 0}
         >
-          &#10094; {/* Seta Esquerda HTML entity */}
+          <ChevronUp />
         </button>
 
         <div className={styles.content}>
@@ -111,7 +112,7 @@ export default function Swiper({ records = [] }: SwiperProps) {
           onClick={handleNext}
           disabled={currentIndex === records.length - 1}
         >
-          &#10095; {/* Seta Direita HTML entity */}
+          <ChevronDown />
         </button>
       </div>
     </div>
