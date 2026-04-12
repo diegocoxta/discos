@@ -1,4 +1,5 @@
 "use client";
+
 import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { ListFilter, X } from "lucide-react";
@@ -25,20 +26,22 @@ export default function FolderList(props: FolderListProps) {
     <div className={styles.container}>
       {isOpen && (
         <nav className={styles.list}>
-          {props.list
-            .filter((i) => i.count > 0 && i.name.toLowerCase() !== "all")
-            .map((loc) => (
-              <Link
-                href={`/${loc.id}`}
-                key={loc.id}
-                className={`${styles.item} ${pathname === `/${loc.id}` ? styles.active : ""}`}
-              >
-                <span>{loc.name}</span>
-                <span className={styles.counter}>
-                  {renderCounter(loc.count)}
-                </span>
-              </Link>
-            ))}
+          <div className={styles.scrollArea}>
+            {props.list
+              .filter((i) => i.count > 0 && i.name.toLowerCase() !== "all")
+              .map((loc) => (
+                <Link
+                  href={`/${loc.id}`}
+                  key={loc.id}
+                  className={`${styles.item} ${pathname === `/${loc.id}` ? styles.active : ""}`}
+                >
+                  <span>{loc.name}</span>
+                  <span className={styles.counter}>
+                    {renderCounter(loc.count)}
+                  </span>
+                </Link>
+              ))}
+          </div>
 
           <div className={styles.divider} />
 
