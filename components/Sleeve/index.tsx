@@ -1,16 +1,16 @@
 import { getImageProps } from "next/image";
 
-import Vinyl, { RecordType } from "@/components/Vinyl";
+import Vinyl, { Vinylype } from "@/components/Vinyl";
 
 import styles from "./styles.module.css";
 
-interface SleeveProps extends Pick<RecordType, "cover" | "color"> {
+interface SleeveProps extends Pick<Vinylype, "cover" | "id" | "color"> {
   size?: number;
   isOpened?: boolean;
 }
 
 export default function Sleeve(props: SleeveProps) {
-  const { cover, size = 300, color, isOpened } = props;
+  const { id, cover, color, size = 300, isOpened } = props;
 
   let src = "";
 
@@ -49,7 +49,7 @@ export default function Sleeve(props: SleeveProps) {
         }
       />
       <div className={styles.vinyl}>
-        <Vinyl cover={cover} size={size - 20} color={color} />
+        <Vinyl id={id} cover={cover} size={size - 20} color={color} />
       </div>
     </div>
   );

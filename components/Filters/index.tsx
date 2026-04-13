@@ -2,18 +2,18 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { ListFilter, X } from "lucide-react";
+import { Folders, X } from "lucide-react";
 
 import { Folder } from "@/app/discogs";
 
 import styles from "./styles.module.css";
 import Link from "next/link";
 
-interface FolderListProps {
-  list: Folder[];
+interface FiltersProps {
+  folders: Folder[];
 }
 
-export default function FolderList(props: FolderListProps) {
+export default function Filters(props: FiltersProps) {
   const pathname = usePathname();
   const [isOpen, setIsOpen] = useState(false);
 
@@ -27,20 +27,21 @@ export default function FolderList(props: FolderListProps) {
       {isOpen && (
         <nav className={styles.list}>
           <div className={styles.scrollArea}>
-            {props.list
-              .filter((i) => i.count > 0 && i.name.toLowerCase() !== "all")
-              .map((loc) => (
-                <Link
-                  href={`/${loc.id}`}
-                  key={loc.id}
-                  className={`${styles.item} ${pathname === `/${loc.id}` ? styles.active : ""}`}
-                >
-                  <span>{loc.name}</span>
-                  <span className={styles.counter}>
-                    {renderCounter(loc.count)}
-                  </span>
-                </Link>
-              ))}
+            {props.folders &&
+              props.folders
+                .filter((i) => i.count > 0 && i.name.toLowerCase() !== "all")
+                .map((loc) => (
+                  <Link
+                    href={`/folder/${loc.id}`}
+                    key={loc.id}
+                    className={`${styles.item} ${pathname === `/folder/${loc.id}` ? styles.active : ""}`}
+                  >
+                    <span>{loc.name}</span>
+                    <span className={styles.counter}>
+                      {renderCounter(loc.count)}
+                    </span>
+                  </Link>
+                ))}
           </div>
 
           <div className={styles.divider} />
@@ -62,7 +63,7 @@ export default function FolderList(props: FolderListProps) {
         {isOpen ? (
           <X size={32} color="white" />
         ) : (
-          <ListFilter size={32} color="white" />
+          <Folders size={32} color="white" />
         )}
       </button>
     </div>

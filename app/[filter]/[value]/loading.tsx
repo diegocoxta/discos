@@ -1,5 +1,5 @@
 import Loading from "@/components/Loading";
 
-export default function FolderLoadingPage() {
+export default function FilterLoadingPage() {
   return <Loading />;
 }

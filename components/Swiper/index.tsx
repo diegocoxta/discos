@@ -4,12 +4,12 @@ import { useState } from "react";
 import Image from "next/image";
 import { ChevronDown, ChevronUp } from "lucide-react";
 
-import { RecordType } from "@/components/Vinyl";
+import { Vinylype } from "@/components/Vinyl";
 
 import styles from "./styles.module.css";
 
 interface SwiperProps {
-  records: RecordType[];
+  records: Vinylype[];
 }
 
 export default function Swiper({ records = [] }: SwiperProps) {

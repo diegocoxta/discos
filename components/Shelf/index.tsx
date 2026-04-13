@@ -1,11 +1,11 @@
 import Sleeve from "@/components/Sleeve";
-import { RecordType } from "@/components/Vinyl";
+import { Vinylype } from "@/components/Vinyl";
 
 import styles from "./styles.module.css";
 
 interface ShelfProps {
   stackOrder?: "last-on-top" | "first-on-top";
-  records: RecordType[];
+  records: Vinylype[];
   size?: number;
 }
 

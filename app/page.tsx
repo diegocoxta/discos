@@ -1,7 +1,7 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
 import VinylList from "@/components/VinylList";
-import FolderList from "@/components/FolderList";
+import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 
 import { getCollection, getFolders, getWishlist } from "./discogs";
@@ -20,7 +20,7 @@ export default async function RootPage() {
         }}
       />
       <VinylList list={collection.releases} listType="collection" />
-      <FolderList list={folders.folders} />
+      <Filters folders={folders.folders} />
       <Footer />
     </Container>
   );
