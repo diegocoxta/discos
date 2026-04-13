@@ -1,10 +1,12 @@
+import Link from "next/link";
+
 import Sleeve from "@/components/Sleeve";
+import { colors } from "@/components/Vinyl/colors";
 
 import { ReleaseDetails } from "@/app/discogs";
+import { cleanName, slug } from "@/app/utils";
 
 import styles from "./styles.module.css";
-import { cleanName } from "@/app/utils";
-import { colors } from "../Vinyl/colors";
 
 interface VinylDetailsProps {
   release: ReleaseDetails;
@@ -28,10 +30,9 @@ export default function VinylDetails(props: VinylDetailsProps) {
       />
       <div className={styles.details}>
         <h2>{props.release?.title}</h2>
-        <p className={styles.artist}>
-          {cleanName(props.release?.artists[0].name)}
+        <p>
+          {cleanName(props.release?.artists[0].name)} • {props.release?.year}
         </p>
-        <p className={styles.year}>{props.release?.year}</p>
         {props.release?.tracklist.length > 0 && (
           <div className={styles.tracklist}>
             <h3>Tracklist</h3>
@@ -50,7 +51,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
             <h3>Styles</h3>
             <ul>
               {props.release?.styles?.map((style, index) => (
-                <li key={index}>{style}</li>
+                <li key={`${index}-${style}`}>{style}</li>
               ))}
             </ul>
           </div>

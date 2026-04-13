@@ -1,20 +1,25 @@
 .container {
   display: flex;
-  gap: 50px;
+  gap: 20px;
   justify-content: space-between;
   padding: 60px;
   border-radius: 10px;
-  margin: 100px 20px;
-
+  margin: 0 auto;
+  max-width: 500px;
   flex-direction: column;
-}
-
-.details {
 }
 
 .tracklist {
   margin-top: 20px;
   width: 100%;
+
+  ol {
+    list-style: none;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+  }
 }
 
 .track {
@@ -22,4 +27,18 @@
   font-size: 16px;
   font-weight: 500;
   border-bottom: 1px dotted var(--text-color);
+}
+
+.styles {
+  margin: 20px 0;
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+  }
 }
