@@ -33,6 +33,11 @@
 .artist {
   font-size: 16px;
   font-style: italic;
+  border-bottom: 1px dotted transparent;
+
+  &:hover {
+    border-color: var(--text-color);
+  }
 }
 
 .date {

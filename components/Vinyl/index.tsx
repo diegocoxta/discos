@@ -20,7 +20,6 @@ interface VinylProps extends Pick<Vinylype, "cover" | "color" | "id"> {
 export default function Vinyl(props: VinylProps) {
   const { id, cover, color, isPlaying = false, size = 300 } = props;
 
-  console.log(colors[id]);
   return (
     <div
       className={`${styles.container} ${isPlaying ? styles.playing : ""}`}
