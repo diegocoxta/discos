@@ -1,4 +1,4 @@
-export const colors: { [key: number]: string } = {
+export const colors: { [key: string]: string } = {
   29069491: "#fff",
   27530634: "#ffffffBF",
   33513035: "#ffffffBF",

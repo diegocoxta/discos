@@ -1,6 +1,6 @@
 import Container from "@/components/Container";
 import Header from "@/components/Header";
-import FolderList from "@/components/FolderList";
+import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 
 import { getCollection, getFolders, getWishlist } from "@/app/discogs";
@@ -23,7 +23,7 @@ export default async function FolderLayoutPage({
         }}
       />
       {children}
-      <FolderList list={folders.folders} />
+      <Filters folders={folders.folders} />
       <Footer />
     </Container>
   );

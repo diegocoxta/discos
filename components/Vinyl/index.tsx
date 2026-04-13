@@ -1,7 +1,9 @@
 import Image from "next/image";
 import styles from "./styles.module.css";
 
-export interface RecordType {
+import { colors } from "./colors";
+
+export interface Vinylype {
   id: string;
   cover?: string;
   title: string;
@@ -10,21 +12,22 @@ export interface RecordType {
   color?: string;
 }
 
-interface VinylProps extends Pick<RecordType, "cover" | "color"> {
+interface VinylProps extends Pick<Vinylype, "cover" | "color" | "id"> {
   isPlaying?: boolean;
   size?: number;
 }
 
 export default function Vinyl(props: VinylProps) {
-  const { cover, color = "#000", isPlaying = false, size = 300 } = props;
+  const { id, cover, color, isPlaying = false, size = 300 } = props;
 
+  console.log(colors[id]);
   return (
     <div
       className={`${styles.container} ${isPlaying ? styles.playing : ""}`}
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        backgroundColor: color, // Injeção dinâmica da cor via props
+        backgroundColor: color || colors[id] || "#000",
       }}
     >
       <div className={styles.branding}>
