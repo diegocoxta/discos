@@ -7,6 +7,7 @@
   max-width: 500px;
   animation: slideup 0.3s ease-out;
   margin: 30px auto;
+  width: 90%;
 
   &::backdrop {
     background: rgb(0 0 0 / 60%);
