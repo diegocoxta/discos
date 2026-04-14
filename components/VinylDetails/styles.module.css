@@ -2,15 +2,16 @@
   display: flex;
   gap: 20px;
   justify-content: space-between;
-  padding: 60px;
+  padding: 60px 30px 20px;
   border-radius: 10px;
   margin: 0 auto;
   max-width: 500px;
   flex-direction: column;
+  width: 100%;
 }
 
 .tracklist {
-  margin-top: 20px;
+  margin-top: 30px;
   width: 100%;
 
   ol {
@@ -27,6 +28,9 @@
   font-size: 16px;
   font-weight: 500;
   border-bottom: 1px dotted var(--text-color);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
 .styles {
@@ -36,6 +40,7 @@
     list-style: none;
     display: flex;
     gap: 10px;
+    flex-wrap: wrap;
   }
 
   h3 {
