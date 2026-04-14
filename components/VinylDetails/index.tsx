@@ -24,7 +24,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
     >
       <Sleeve
         isOpened
-        size={224}
+        size={200}
         cover={props.release?.images[0].uri}
         id={props.release?.id.toString()}
       />
