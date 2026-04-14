@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 
-import { getCollection, getFolders, getWishlist } from "@/app/discogs";
+import { getCollection, getFolders, getWishlist } from "@/lib/discogs";
 
 export default async function FilterLayoutPage({
   children,

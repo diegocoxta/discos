@@ -1,10 +1,8 @@
-import Link from "next/link";
-
 import Sleeve from "@/components/Sleeve";
 import { colors } from "@/components/Vinyl/colors";
 
-import { ReleaseDetails } from "@/app/discogs";
-import { cleanName, slug } from "@/app/utils";
+import { ReleaseDetails } from "@/lib/types";
+import { cleanName, slug } from "@/lib/utils";
 
 import styles from "./styles.module.css";
 

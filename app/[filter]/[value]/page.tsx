@@ -2,8 +2,8 @@ import { notFound } from "next/navigation";
 
 import VinylList from "@/components/VinylList";
 
-import { getCollection, getFolders } from "@/app/discogs";
-import { slug } from "@/app/utils";
+import { getCollection, getFolders } from "@/lib/discogs";
+import { slug } from "@/lib/utils";
 
 export const revalidate = 86400;
 export const dynamicParams = true;

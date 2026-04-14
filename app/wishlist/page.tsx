@@ -3,7 +3,7 @@ import Header from "@/components/Header";
 import VinylList from "@/components/VinylList";
 import Footer from "@/components/Footer";
 
-import { getCollection, getWishlist } from "../discogs";
+import { getCollection, getWishlist } from "@/lib/discogs";
 
 export default async function WishlistPage() {
   const collection = await getCollection("0");

@@ -1,7 +1,7 @@
 import Modal from "@/components/Modal";
 
 import VinylPage from "@/app/vinyl/[id]/page";
-import { getCollection } from "@/app/discogs";
+import { getCollection } from "@/lib/discogs";
 
 interface VinylModalProps {
   params: {

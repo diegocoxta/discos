@@ -4,7 +4,7 @@ import VinylList from "@/components/VinylList";
 import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 
-import { getCollection, getFolders, getWishlist } from "./discogs";
+import { getCollection, getFolders, getWishlist } from "@/lib/discogs";
 
 export default async function RootPage() {
   const collection = await getCollection("0");
