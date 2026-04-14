@@ -44,3 +44,60 @@
   font-size: 12px;
   margin-top: 5px;
 }
+
+.searchContainer {
+  width: 80%;
+  margin: 0px auto 50px;
+  position: relative;
+
+  @media (min-width: 786px) {
+    width: 50%;
+  }
+}
+
+.searchBar {
+  display: flex;
+  padding: 14px;
+  width: 100%;
+  border-radius: 40px;
+  border: 1px solid rgb(from var(--text-color) r g b / 60%);
+  color: var(--text-color);
+  padding-right: 70px;
+  font-size: 16px;
+
+  &:placeholder-shown {
+    text-overflow: ellipsis;
+  }
+
+  &:focus {
+    border-color: var(--text-color);
+    outline: none;
+  }
+
+  @media (min-width: 768px) {
+    padding: 20px;
+  }
+}
+
+.searchIcon {
+  position: absolute;
+  top: 0;
+  right: 20px;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  [data-clickable] {
+    cursor: pointer;
+  }
+
+  svg {
+    color: rgb(from var(--text-color) r g b / 90%);
+
+    @media (min-width: 768px) {
+      height: 32px;
+      width: 32px;
+    }
+  }
+}

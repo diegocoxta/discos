@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 
 import VinylDetails from "@/components/VinylDetails";
 
-import { getCollection, getRelease } from "@/app/discogs";
+import { getCollection, getRelease } from "@/lib/discogs";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
