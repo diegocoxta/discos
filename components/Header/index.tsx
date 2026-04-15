@@ -14,7 +14,7 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className={styles.container}>
-      <h1 className={styles.logo}>vinyl.</h1>
+      <h1 className={styles.logo}>myvinyl.</h1>
 
       <ul className={styles.nav}>
         <li
