@@ -46,6 +46,12 @@ export default function VinylList(props: VinylListProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const list = search(props.list, searchQuery);
 
+  function createVinylLink(record: Want | Release) {
+    return `/vinyl/${record.id}${"instance_id" in record ? `/${record.instance_id}` : ""}/${slug(record.basic_information.title)}-${slug(
+      record.basic_information.artists[0].name,
+    )}`;
+  }
+
   return (
     <>
       <div className={styles.searchContainer}>
@@ -77,7 +83,7 @@ export default function VinylList(props: VinylListProps) {
             className={styles.item}
             style={{ zIndex: 10 + (list.length - index) }}
           >
-            <Link href={`/vinyl/${record.id}`}>
+            <Link href={createVinylLink(record)}>
               <Sleeve
                 id={record.id.toString()}
                 size={224}

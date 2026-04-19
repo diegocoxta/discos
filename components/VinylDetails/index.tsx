@@ -1,13 +1,14 @@
 import Sleeve from "@/components/Sleeve";
 import { colors } from "@/components/Vinyl/colors";
 
-import { ReleaseDetails } from "@/lib/types";
-import { cleanName, slug } from "@/lib/utils";
+import { Instance, ReleaseDetails } from "@/lib/types";
+import { cleanName } from "@/lib/utils";
 
 import styles from "./styles.module.css";
 
 interface VinylDetailsProps {
   release: ReleaseDetails;
+  instance?: Instance;
 }
 
 export default function VinylDetails(props: VinylDetailsProps) {
@@ -31,6 +32,22 @@ export default function VinylDetails(props: VinylDetailsProps) {
         <p>
           {cleanName(props.release?.artists[0].name)} • {props.release?.year}
         </p>
+        {props.instance?.notes && props.instance?.notes.length > 0 && (
+          <div className={styles.instance}>
+            {props.instance?.fields
+              ?.filter((field) => field.public)
+              ?.map((field) => (
+                <p key={field.name}>
+                  <strong>{field.name}:</strong>
+                  {
+                    props.instance?.notes?.find(
+                      (note) => note.field_id === field.id,
+                    )?.value
+                  }
+                </p>
+              ))}
+          </div>
+        )}
         {props.release?.tracklist.length > 0 && (
           <div className={styles.tracklist}>
             <h3>Tracklist</h3>

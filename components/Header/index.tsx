@@ -4,6 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 
 import styles from "./styles.module.css";
+import Vinyl from "../Vinyl";
 
 interface HeaderProps {
   counter: { [key: string]: number };
@@ -14,7 +15,10 @@ export default function Header(props: HeaderProps) {
 
   return (
     <header className={styles.container}>
-      <h1 className={styles.logo}>myvinyl.</h1>
+      <h1 className={styles.logo}>
+        <Vinyl size={20} id="" />
+        <span>myvinyl.</span>
+      </h1>
 
       <ul className={styles.nav}>
         <li
