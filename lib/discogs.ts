@@ -21,14 +21,6 @@ async function getResource<T>(url: string): Promise<T> {
       next: { revalidate: 3600 * 24 },
     });
 
-    console.log(`
-      Requesting: ${request.url}
-      Status: ${request.status}
-      X-Discogs-Ratelimit: ${request.headers.get("X-Discogs-Ratelimit")}
-      X-Discogs-Ratelimit-Used : ${request.headers.get("X-Discogs-Ratelimit-Used")}
-      X-Discogs-Ratelimit-Remaining: ${request.headers.get("X-Discogs-Ratelimit-Remaining")}
-    `);
-
     const data = await request.json();
 
     return data as T;
