@@ -2,11 +2,6 @@ export interface ApiResponse {
   pagination: Pagination;
 }
 
-export interface Root {
-  pagination: Pagination;
-  releases: Release[];
-}
-
 export interface Pagination {
   page: number;
   pages: number;
@@ -34,6 +29,12 @@ export interface Release {
   date_added: string;
   rating: number;
   basic_information: BasicInformation;
+}
+
+export interface Instance extends Release {
+  folder_id: number;
+  notes: Note[];
+  fields: Field[];
 }
 
 export interface BasicInformation {
@@ -186,4 +187,19 @@ export interface ReleaseDetails {
   estimated_weight: number;
   blocked_from_sale: boolean;
   is_offensive: boolean;
+}
+
+export interface Note {
+  field_id: number;
+  value: string;
+}
+
+export interface Field {
+  id: number;
+  name: string;
+  type: string;
+  position: number;
+  public: boolean;
+  options?: string[];
+  lines?: number;
 }

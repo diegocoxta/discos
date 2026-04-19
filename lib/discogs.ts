@@ -2,7 +2,9 @@
 
 import {
   ApiResponse,
+  Field,
   Folder,
+  Instance,
   Release,
   ReleaseDetails,
   Want,
@@ -80,6 +82,27 @@ export async function getFolders(): Promise<GetFoldersType> {
 
 export async function getRelease(id: string): Promise<ReleaseDetails> {
   const data = await getResource<ReleaseDetails>(`releases/${id}`);
+
+  return data;
+}
+
+type GetInstanceType = Instance & {
+  fields: Field[];
+};
+
+export async function getInstance(
+  id: string,
+  instanceid: string,
+): Promise<GetInstanceType> {
+  const fieldsData = await getResource<{ fields: Field[] }>(
+    `users/diegocoxta/collection/fields`,
+  );
+
+  const data = await getResource<GetInstanceType>(
+    `users/diegocoxta/collection/folders/0/releases/${id}/instances/${instanceid}`,
+  );
+
+  data.fields = fieldsData.fields;
 
   return data;
 }

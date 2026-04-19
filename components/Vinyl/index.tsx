@@ -4,7 +4,7 @@ import styles from "./styles.module.css";
 import { colors } from "./colors";
 
 export interface Vinylype {
-  id: string;
+  id?: string;
   cover?: string;
   title: string;
   artist: string;
@@ -26,7 +26,7 @@ export default function Vinyl(props: VinylProps) {
       style={{
         width: `${size}px`,
         height: `${size}px`,
-        backgroundColor: color || colors[id] || "#000",
+        backgroundColor: color || colors[id as string] || "#000",
       }}
     >
       <div className={styles.branding}>
