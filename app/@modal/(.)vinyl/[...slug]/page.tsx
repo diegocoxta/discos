@@ -20,7 +20,7 @@ export async function generateStaticParams() {
   const collectionItems = collection.releases.map((record) => ({
     slug: [
       record.id.toString(),
-      "instance_id" in record && record.instance_id.toString(),
+      record.instance_id.toString(),
       `${slug(record.basic_information.title)}-${slug(record.basic_information.artists[0].name)}`,
     ],
   }));
