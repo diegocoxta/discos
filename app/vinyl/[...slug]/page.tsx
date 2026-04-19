@@ -2,13 +2,7 @@ import { notFound } from "next/navigation";
 
 import VinylDetails from "@/components/VinylDetails";
 
-import {
-  getCollection,
-  getInstance,
-  getRelease,
-  getWishlist,
-} from "@/lib/discogs";
-import { slug } from "@/lib/utils";
+import { getInstance, getRelease } from "@/lib/discogs";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -17,28 +11,6 @@ interface VinylPageProps {
   params: {
     slug: string[];
   };
-}
-
-export async function generateStaticParams() {
-  const collection = await getCollection("0");
-  const wishlist = await getWishlist();
-
-  const collectionItems = collection.releases.map((record) => ({
-    slug: [
-      record.id.toString(),
-      record.instance_id.toString(),
-      `${slug(record.basic_information.title)}-${slug(record.basic_information.artists[0].name)}`,
-    ],
-  }));
-
-  const wishlistItems = wishlist.wants.map((record) => ({
-    slug: [
-      record.id.toString(),
-      `${slug(record.basic_information.title)}-${slug(record.basic_information.artists[0].name)}`,
-    ],
-  }));
-
-  return [...collectionItems, ...wishlistItems];
 }
 
 export default async function VinylPage(props: VinylPageProps) {
