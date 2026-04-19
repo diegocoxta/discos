@@ -36,6 +36,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
           <div className={styles.instance}>
             {props.instance?.fields
               ?.filter((field) => field.public)
+              ?.sort((a, b) => a.position - b.position)
               ?.map((field) => (
                 <p key={field.name}>
                   <strong>{field.name}:</strong>

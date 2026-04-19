@@ -13,16 +13,21 @@ import {
 import { cleanName } from "@/lib/utils";
 
 async function getResource<T>(url: string): Promise<T> {
-  const request = await fetch(`https://api.discogs.com/${url}`, {
-    headers: {
-      Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
-    },
-    next: { revalidate: 3600 * 24 },
-  });
+  try {
+    const request = await fetch(`https://api.discogs.com/${url}`, {
+      headers: {
+        Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
+      },
+      next: { revalidate: 3600 * 24 },
+    });
 
-  const data = await request.json();
+    const data = await request.json();
 
-  return data as T;
+    return data as T;
+  } catch (error) {
+    console.error(error);
+    return {} as T;
+  }
 }
 
 type GetCollectionType = ApiResponse & {
