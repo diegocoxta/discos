@@ -5,7 +5,6 @@ import {
   Field,
   Folder,
   Instance,
-  Release,
   ReleaseDetails,
   Want,
 } from "@/lib/types";
@@ -18,6 +17,7 @@ async function getResource<T>(url: string): Promise<T> {
       headers: {
         Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
       },
+      next: { revalidate: 3600 * 24 },
     });
 
     const data = await request.json();

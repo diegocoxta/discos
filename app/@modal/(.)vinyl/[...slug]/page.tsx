@@ -8,6 +8,9 @@ interface VinylModalProps {
   };
 }
 
+export const revalidate = 86400;
+export const dynamicParams = true;
+
 export default async function VinylModal(props: VinylModalProps) {
   const { slug } = await props.params;
 
