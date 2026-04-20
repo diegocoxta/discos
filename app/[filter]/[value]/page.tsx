@@ -2,8 +2,9 @@ import { notFound } from "next/navigation";
 
 import VinylList from "@/components/VinylList";
 
-import { getCollection, getFolders } from "@/lib/discogs";
+import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
 import { slug } from "@/lib/utils";
+import { Instance } from "@/lib/types";
 
 export const revalidate = 86400;
 export const dynamicParams = true;
@@ -38,26 +39,49 @@ export async function generateStaticParams() {
 export default async function FilterPage(props: FilterPageProps) {
   const { value, filter } = await props.params;
   const collection = await getCollection(filter === "folder" ? value : "0");
+  const customFields = await getCustomFields();
 
-  const list = collection?.releases?.filter((release) => {
-    if (filter === "artist") {
-      return release.basic_information.artists.some(
-        (artist) => slug(artist.name) === slug(value),
+  const customFieldDateId = customFields.fields.find(
+    (field) => field.name === "Acquisition Date",
+  )?.id;
+
+  const list = collection?.releases
+    ?.filter((release) => {
+      if (filter === "artist") {
+        return release.basic_information.artists.some(
+          (artist) => slug(artist.name) === slug(value),
+        );
+      }
+
+      if (filter === "style") {
+        return release.basic_information.styles.some(
+          (style) => slug(style) === slug(value),
+        );
+      }
+
+      return true;
+    })
+    .map((item) => ({
+      ...item,
+      date_added: item.notes.find((note) => note.field_id === customFieldDateId)
+        ?.value,
+    }))
+    .toSorted((a, b) => {
+      return (
+        new Date(
+          b.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
+            "",
+        ).getTime() -
+        new Date(
+          a.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
+            "",
+        ).getTime()
       );
-    }
-
-    if (filter === "style") {
-      return release.basic_information.styles.some(
-        (style) => slug(style) === slug(value),
-      );
-    }
-
-    return true;
-  });
+    }) as Instance[];
 
   if (!list || list.length === 0) {
     notFound();
   }
 
-  return <VinylList list={list} listType="collection" />;
+  return <VinylList list={list} customFields={customFields.fields} />;
 }

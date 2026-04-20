@@ -6,7 +6,7 @@ export default function Loading() {
   return (
     <div className={styles.container}>
       <div className={styles.content}>
-        <Vinyl isPlaying size={100} id={""} />
+        <Vinyl isPlaying size={100} />
         <h2>Loading...</h2>
       </div>
     </div>

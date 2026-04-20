@@ -4,7 +4,7 @@ import { useState } from "react";
 import { usePathname } from "next/navigation";
 import { Folders, X } from "lucide-react";
 
-import { Folder } from "@/lib/types";
+import { Field, Folder } from "@/lib/types";
 
 import styles from "./styles.module.css";
 import Link from "next/link";

@@ -4,13 +4,13 @@ import Vinyl, { Vinylype } from "@/components/Vinyl";
 
 import styles from "./styles.module.css";
 
-interface SleeveProps extends Pick<Vinylype, "cover" | "id" | "color"> {
+interface SleeveProps extends Pick<Vinylype, "cover" | "color"> {
   size?: number;
   isOpened?: boolean;
 }
 
 export default function Sleeve(props: SleeveProps) {
-  const { id, cover, color, size = 300, isOpened } = props;
+  const { cover, color, size = 300, isOpened } = props;
 
   let src = "";
 
@@ -49,7 +49,7 @@ export default function Sleeve(props: SleeveProps) {
         }
       />
       <div className={styles.vinyl}>
-        <Vinyl id={id} cover={cover} size={size - 20} color={color} />
+        <Vinyl cover={cover} size={size - 20} color={color} />
       </div>
     </div>
   );

@@ -1,50 +1,54 @@
 import Sleeve from "@/components/Sleeve";
-import { colors } from "@/components/Vinyl/colors";
 
-import { Instance, ReleaseDetails } from "@/lib/types";
-import { cleanName } from "@/lib/utils";
+import { Field, Instance, ReleaseDetails } from "@/lib/types";
+import { cleanName, formatDate, mergeNoteData } from "@/lib/utils";
 
 import styles from "./styles.module.css";
 
 interface VinylDetailsProps {
   release: ReleaseDetails;
   instance?: Instance;
+  customFields?: Field[];
 }
 
 export default function VinylDetails(props: VinylDetailsProps) {
+  const notes = mergeNoteData(props.instance?.notes, props.customFields);
+  const color = notes?.find((note) => note.name === "Color")?.value;
+
   return (
     <div
       className={styles.container}
       style={{
-        backgroundColor: colors[props.release.id]
-          ? `${colors[props.release.id]}1A`
-          : "transparent",
+        backgroundColor: color ? `${color}1A` : "transparent",
       }}
     >
       <Sleeve
         isOpened
         size={200}
         cover={props.release?.images[0].uri}
-        id={props.release?.id.toString()}
+        color={color}
       />
       <div className={styles.details}>
         <h2>{props.release?.title}</h2>
         <p>
           {cleanName(props.release?.artists[0].name)} • {props.release?.year}
         </p>
-        {props.instance?.notes && props.instance?.notes.length > 0 && (
-          <div className={styles.instance}>
-            {props.instance?.fields
+        {notes && notes.length > 0 && (
+          <div
+            className={styles.instance}
+            style={{
+              backgroundColor: color ? `${color}1A` : "#efefef",
+            }}
+          >
+            {notes
               ?.filter((field) => field.public)
-              ?.sort((a, b) => a.position - b.position)
+              ?.sort((a, b) => a.position! - b.position!)
               ?.map((field) => (
                 <p key={field.name}>
                   <strong>{field.name}:</strong>
-                  {
-                    props.instance?.notes?.find(
-                      (note) => note.field_id === field.id,
-                    )?.value
-                  }
+                  {field.name?.includes("Date")
+                    ? formatDate(field.value)
+                    : field.value}
                 </p>
               ))}
           </div>
