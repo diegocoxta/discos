@@ -13,6 +13,8 @@ import {
 import { mergeNoteData } from "@/lib/utils";
 import { Instance } from "@/lib/types";
 
+export const revalidate = 3600;
+
 export default async function RootPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
