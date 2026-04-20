@@ -61,6 +61,12 @@
   }
 }
 
+.itemTitle {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
 .counter {
   background-color: rgb(from var(--background-color) r g b / 20%);
   padding: 3px 6px;

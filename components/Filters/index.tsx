@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { usePathname } from "next/navigation";
-import { Folders, X } from "lucide-react";
+import { Folders, X, Folder as FolderClosed, FolderOpen } from "lucide-react";
 
-import { Field, Folder } from "@/lib/types";
+import { Folder } from "@/lib/types";
 
 import styles from "./styles.module.css";
 import Link from "next/link";
@@ -36,7 +36,14 @@ export default function Filters(props: FiltersProps) {
                     key={loc.id}
                     className={`${styles.item} ${pathname === `/folder/${loc.id}` ? styles.active : ""}`}
                   >
-                    <span>{loc.name}</span>
+                    <span className={styles.itemTitle}>
+                      {pathname === `/folder/${loc.id}` ? (
+                        <FolderOpen />
+                      ) : (
+                        <FolderClosed />
+                      )}
+                      <span>{loc.name}</span>
+                    </span>
                     <span className={styles.counter}>
                       {renderCounter(loc.count)}
                     </span>
@@ -50,7 +57,10 @@ export default function Filters(props: FiltersProps) {
             href="/"
             className={`${styles.item} ${pathname === `/` ? styles.active : ""}`}
           >
-            All records
+            <span className={styles.itemTitle}>
+              {pathname === `/` ? <FolderOpen /> : <FolderClosed />}
+              All records
+            </span>
           </Link>
         </nav>
       )}
