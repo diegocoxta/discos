@@ -6,7 +6,7 @@ import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
 import { slug } from "@/lib/utils";
 import { Instance } from "@/lib/types";
 
-export const revalidate = 86400;
+export const revalidate = 3600;
 export const dynamicParams = true;
 
 interface FilterPageProps {
