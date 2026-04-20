@@ -81,7 +81,7 @@ export default function Swiper({ records = [] }: SwiperProps) {
           <div className={styles.stackArea}>
             {records.map((record, index) => (
               <div
-                key={record.id || index}
+                key={record.title || index}
                 className={styles.card}
                 style={getCardStyle(index) as React.CSSProperties}
                 // Permite clicar em um disco da pilha de cima para avançar direto pra ele
@@ -101,7 +101,7 @@ export default function Swiper({ records = [] }: SwiperProps) {
 
           {/* Metadados do Disco Ativo */}
           {activeRecord && (
-            <div className={styles.infoArea} key={activeRecord.id}>
+            <div className={styles.infoArea} key={activeRecord.title}>
               <p className={styles.artist}>{activeRecord.artist}</p>
               <h2 className={styles.title}>{activeRecord.title}</h2>
               <p className={styles.year}>{activeRecord.year}</p>

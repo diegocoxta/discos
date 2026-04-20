@@ -31,7 +31,7 @@ async function getResource<T>(url: string): Promise<T> {
 }
 
 type GetCollectionType = ApiResponse & {
-  releases: Release[];
+  releases: Instance[];
   filters: {
     artists: string[];
     styles: string[];
@@ -91,23 +91,23 @@ export async function getRelease(id: string): Promise<ReleaseDetails> {
   return data;
 }
 
-type GetInstanceType = Instance & {
-  fields: Field[];
-};
-
 export async function getInstance(
   id: string,
   instanceid: string,
-): Promise<GetInstanceType> {
-  const fieldsData = await getResource<{ fields: Field[] }>(
-    `users/diegocoxta/collection/fields`,
-  );
-
-  const data = await getResource<GetInstanceType>(
+): Promise<Instance> {
+  const data = await getResource<Instance>(
     `users/diegocoxta/collection/folders/0/releases/${id}/instances/${instanceid}`,
   );
 
-  data.fields = fieldsData.fields;
-
   return data;
+}
+
+type GetCustomFields = { fields: Field[] };
+
+export async function getCustomFields(): Promise<GetCustomFields> {
+  const fieldsData = await getResource<GetCustomFields>(
+    `users/diegocoxta/collection/fields`,
+  );
+
+  return fieldsData;
 }

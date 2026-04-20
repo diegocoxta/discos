@@ -17,7 +17,7 @@ export default async function WishlistPage() {
           collection: collection.pagination.items,
         }}
       />
-      <VinylList list={wishlist.wants} listType="wants" />
+      <VinylList list={wishlist.wants} />
       <Footer />
     </Container>
   );

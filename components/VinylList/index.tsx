@@ -7,20 +7,20 @@ import { Search, X } from "lucide-react";
 
 import Sleeve from "@/components/Sleeve";
 
-import { cleanName, slug } from "@/lib/utils";
-import { Release, Want } from "@/lib/types";
+import { cleanName, formatDate, slug } from "@/lib/utils";
+import { Field, Instance, Release, Want } from "@/lib/types";
 
 import styles from "./styles.module.css";
 
 interface VinylListProps {
-  listType: "collection" | "wants";
-  list: Want[] | Release[];
+  customFields?: Field[];
+  list: Want[] | Instance[];
 }
 
 function search(
-  list: (Want | Release)[],
+  list: (Want | Instance)[],
   searchQuery: string,
-): (Want | Release)[] {
+): (Want | Instance)[] {
   if (!searchQuery.trim()) return list;
 
   const fuse = new Fuse(list, {
@@ -52,6 +52,10 @@ export default function VinylList(props: VinylListProps) {
     )}`;
   }
 
+  const customFieldColorId = props.customFields?.find(
+    (field) => field.name === "Color",
+  )?.id;
+
   return (
     <>
       <div className={styles.searchContainer}>
@@ -77,37 +81,44 @@ export default function VinylList(props: VinylListProps) {
               : "No results found."}
           </p>
         )}
-        {list.map((record, index: number) => (
-          <li
-            key={record.id}
-            className={styles.item}
-            style={{ zIndex: 10 + (list.length - index) }}
-          >
-            <Link href={createVinylLink(record)}>
-              <Sleeve
-                id={record.id.toString()}
-                size={224}
-                cover={record.basic_information.cover_image}
-              />
-              <h2 className={styles.title}>{record.basic_information.title}</h2>
-            </Link>
+        {list.map((record, index: number) => {
+          let color = undefined;
 
-            <Link
-              href={`/artist/${slug(record.basic_information.artists[0].name)}`}
-              className={styles.artist}
+          if ("instance_id" in record && record.notes) {
+            color = record.notes?.find(
+              (note) => note.field_id === customFieldColorId,
+            )?.value;
+          }
+
+          return (
+            <li
+              key={record.id}
+              className={styles.item}
+              style={{ zIndex: 10 + (list.length - index) }}
             >
-              {cleanName(record.basic_information.artists[0].name)}
-            </Link>
-            <p className={styles.date}>
-              Added on{" "}
-              {new Date(record.date_added).toLocaleDateString(undefined, {
-                day: "2-digit",
-                month: "long",
-                year: "numeric",
-              })}
-            </p>
-          </li>
-        ))}
+              <Link href={createVinylLink(record)}>
+                <Sleeve
+                  size={224}
+                  cover={record.basic_information.cover_image}
+                  color={color}
+                />
+                <h2 className={styles.title}>
+                  {record.basic_information.title}
+                </h2>
+              </Link>
+
+              <Link
+                href={`/artist/${slug(record.basic_information.artists[0].name)}`}
+                className={styles.artist}
+              >
+                {cleanName(record.basic_information.artists[0].name)}
+              </Link>
+              <p className={styles.date}>
+                Added on {formatDate(record.date_added)}
+              </p>
+            </li>
+          );
+        })}
       </ul>
     </>
   );
