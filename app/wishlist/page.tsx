@@ -5,6 +5,8 @@ import Footer from "@/components/Footer";
 
 import { getCollection, getWishlist } from "@/lib/discogs";
 
+export const revalidate = 3600;
+
 export default async function WishlistPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
