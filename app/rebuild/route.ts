@@ -20,5 +20,5 @@ export async function GET() {
   revalidateTag('discogs', "max");
   revalidatePath('/', 'layout');
 
-  redirect(`/?rebuilt=${data.job.id}`);
+  redirect(`/?rebuilt=1`);
 }
