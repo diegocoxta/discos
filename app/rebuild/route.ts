@@ -1,4 +1,5 @@
 import { redirect } from "next/navigation";
+import { revalidatePath, revalidateTag } from 'next/cache';
 
 export interface Job {
   id: string;
@@ -8,12 +9,16 @@ export interface Job {
 
 export async function GET() {
   const { REBUILD } = process.env;
-  const response = await fetch(REBUILD ?? "");
+  /*const response = await fetch(REBUILD ?? "");
   const data = (await response.json()) as { job: Job };
 
   if (data.job.id) {
     redirect(`/?rebuilt=${data.job.id}`);
   }
+  */
 
-  return Response.json({ error: "Something went wrong" });
+  revalidateTag('discogs');
+  revalidatePath('/', 'layout');
+
+  redirect(`/?rebuilt=${data.job.id}`);
 }
