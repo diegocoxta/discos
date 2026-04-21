@@ -17,7 +17,7 @@ export async function GET() {
   }
   */
 
-  revalidateTag('discogs');
+  revalidateTag('discogs', "max");
   revalidatePath('/', 'layout');
 
   redirect(`/?rebuilt=${data.job.id}`);
