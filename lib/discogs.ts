@@ -17,7 +17,7 @@ async function getResource<T>(url: string): Promise<T> {
       headers: {
         Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
       },
-      next: { revalidate: 3600 },
+      next: { revalidate: 3600, tags: ['discogs'] },
     });
 
     const data = await request.json();
