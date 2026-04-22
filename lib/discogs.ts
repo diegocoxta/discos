@@ -34,6 +34,7 @@ type GetCollectionType = ApiResponse & {
   filters: {
     artists: string[];
     styles: string[];
+    genres: string[];
   };
 };
 
@@ -55,6 +56,11 @@ export async function getCollection(
     styles: [
       ...new Set(
         data.releases?.flatMap((release) => release.basic_information.styles),
+      ),
+    ],
+    genres: [
+      ...new Set(
+        data.releases?.flatMap((release) => release.basic_information.genres),
       ),
     ],
   };
