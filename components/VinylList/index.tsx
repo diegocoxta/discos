@@ -107,12 +107,14 @@ export default function VinylList(props: VinylListProps) {
                 </h2>
               </Link>
 
-              <Link
-                href={`/artist/${slug(record.basic_information.artists[0].name)}`}
+              <p
+                onClick={() =>
+                  setSearchQuery(record.basic_information.artists[0].name)
+                }
                 className={styles.artist}
               >
                 {cleanName(record.basic_information.artists[0].name)}
-              </Link>
+              </p>
               <p className={styles.date}>
                 Added on {formatDate(record.date_added)}
               </p>
