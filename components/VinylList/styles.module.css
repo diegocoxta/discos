@@ -62,18 +62,25 @@
   padding: 14px;
   width: 100%;
   border-radius: 40px;
-  border: 1px solid rgb(from var(--text-color) r g b / 60%);
+  border: 1px solid transparent;
+  background-color: rgb(from var(--text-color) r g b / 20%);
   color: var(--text-color);
   padding-right: 70px;
   font-size: 16px;
+  transition: all 0.2s ease-in;
 
   &:placeholder-shown {
     text-overflow: ellipsis;
   }
 
+  &::placeholder {
+    color: rgb(from var(--text-color) r g b / 70%);
+  }
+
   &:focus {
-    border-color: var(--text-color);
+    border-color: rgb(from var(--text-color) r g b / 60%);
     outline: none;
+    background-color: rgb(from var(--text-color) r g b / 20%);
   }
 
   @media (min-width: 768px) {
@@ -95,7 +102,7 @@
   }
 
   svg {
-    color: rgb(from var(--text-color) r g b / 90%);
+    color: rgb(from var(--text-color) r g b / 70%);
 
     @media (min-width: 768px) {
       height: 32px;
