@@ -16,7 +16,7 @@
 
 .list {
   width: 224px;
-  background-color: var(--text-color);
+  background-color: var(--accent-color);
   border-radius: 10px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -48,7 +48,7 @@
   padding: 12px 22px;
   text-align: left;
   font-size: 16px;
-  color: var(--background-color);
+  color: var(--text-color);
   background: transparent;
   cursor: pointer;
   transition: background-color 0.2s;
@@ -57,7 +57,7 @@
   align-items: flex-start;
 
   &:hover {
-    background-color: rgb(from var(--background-color) r g b / 10%);
+    background-color: rgb(from var(--text-color) r g b / 10%);
   }
 }
 
@@ -72,7 +72,7 @@
   padding: 3px 6px;
   font-size: 12px;
   border-radius: 4px;
-  color: var(--background-color);
+  color: var(--text-color);
 }
 
 .divider {
@@ -88,7 +88,7 @@
 .fab {
   width: 64px;
   height: 64px;
-  background-color: var(--text-color);
+  background-color: var(--accent-color);
   border-radius: 50%;
   display: flex;
   align-items: center;

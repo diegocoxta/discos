@@ -1,6 +1,7 @@
 :root {
-  --background-color: #fdfdfd;
-  --text-color: #323d4d;
+  --background-color: #2a1c1e;
+  --text-color: #edf0f1;
+  --accent-color: #e55242;
 }
 
 html {

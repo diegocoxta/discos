@@ -19,7 +19,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
     <div
       className={styles.container}
       style={{
-        backgroundColor: color ? `${color}1A` : "transparent",
+        backgroundColor: color ? `${color}33` : "transparent",
       }}
     >
       <Sleeve
