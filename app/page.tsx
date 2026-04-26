@@ -10,7 +10,7 @@ import {
   getFolders,
   getWishlist,
 } from "@/lib/discogs";
-import { mergeNoteData } from "@/lib/utils";
+
 import { Instance } from "@/lib/types";
 
 export const revalidate = 3600;
