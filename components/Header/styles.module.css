@@ -72,7 +72,7 @@
 .item:hover,
 .active {
   .link {
-    background-color: rgb(from var(--accent-color) r g b / 90%);
+    background-color: rgb(from var(--text-color) r g b / 90%);
     color: #fff;
 
     .counter {

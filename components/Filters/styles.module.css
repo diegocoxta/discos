@@ -16,7 +16,7 @@
 
 .list {
   width: 224px;
-  background-color: var(--accent-color);
+  background-color: var(--text-color);
   border-radius: 10px;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
   overflow: hidden;
@@ -88,7 +88,7 @@
 .fab {
   width: 64px;
   height: 64px;
-  background-color: var(--accent-color);
+  background-color: var(--text-color);
   border-radius: 50%;
   display: flex;
   align-items: center;
