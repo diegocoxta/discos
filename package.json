@@ -7,18 +7,19 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "upgrade-latest": "yarn upgrade-interactive --latest"
   },
   "dependencies": {
-    "fuse.js": "^7.4.2",
-    "lucide-react": "^1.11.0",
-    "next": "16.2.9",
-    "react": "19.2.7",
-    "react-dom": "19.2.7",
+    "fuse.js": "^7.5.0",
+    "lucide-react": "^1.27.0",
+    "next": "16.2.12",
+    "react": "19.2.8",
+    "react-dom": "19.2.8",
     "slugify": "^1.6.9"
   },
   "devDependencies": {
-    "@types/node": "^25",
+    "@types/node": "^26.1.2",
     "@types/react": "^19.2.17",
     "@types/react-dom": "^19",
     "babel-plugin-react-compiler": "1.0.0",
