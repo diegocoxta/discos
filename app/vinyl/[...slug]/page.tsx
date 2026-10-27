@@ -19,16 +19,16 @@ export default async function VinylPage(props: VinylPageProps) {
 
   const vinyl = await getRelease(id);
 
+  if (!vinyl) {
+    notFound();
+  }
+
   let customFields = undefined;
   let instance = undefined;
 
   if (slug.length > 2) {
-    instance = await getInstance(id, instanceid);
+    instance = (await getInstance(id, instanceid)) ?? undefined;
     customFields = await getCustomFields();
-  }
-
-  if (!vinyl) {
-    notFound();
   }
 
   return (
@@ -36,6 +36,7 @@ export default async function VinylPage(props: VinylPageProps) {
       release={vinyl}
       instance={instance}
       customFields={customFields?.fields}
+      showStores={slug.length <= 2}
     />
   );
 }

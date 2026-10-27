@@ -92,7 +92,7 @@ export default function VinylList(props: VinylListProps) {
 
           return (
             <li
-              key={record.id}
+              key={"instance_id" in record ? record.instance_id : record.id}
               className={styles.item}
               style={{ zIndex: 10 + (list.length - index) }}
             >
