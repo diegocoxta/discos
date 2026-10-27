@@ -36,6 +36,7 @@ export default async function VinylPage(props: VinylPageProps) {
       release={vinyl}
       instance={instance}
       customFields={customFields?.fields}
+      showStores={slug.length <= 2}
     />
   );
 }

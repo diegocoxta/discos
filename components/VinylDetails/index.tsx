@@ -1,7 +1,12 @@
 import Sleeve from "@/components/Sleeve";
 
 import { Field, Instance, ReleaseDetails } from "@/lib/types";
-import { cleanName, formatDate, mergeNoteData } from "@/lib/utils";
+import {
+  cleanName,
+  formatDate,
+  mergeNoteData,
+  searchSlug,
+} from "@/lib/utils";
 
 import styles from "./styles.module.css";
 
@@ -9,6 +14,32 @@ interface VinylDetailsProps {
   release: ReleaseDetails;
   instance?: Instance;
   customFields?: Field[];
+  showStores?: boolean;
+}
+
+function getStoreLinks(release: ReleaseDetails) {
+  const term = `${cleanName(release.artists[0].name)} ${release.title}`;
+  const termSlug = searchSlug(term);
+
+  const amazonQuery = new URLSearchParams({
+    k: term,
+    rh: "p_n_binding_browse-bin:19416266011",
+  });
+
+  return [
+    {
+      name: "Mercado Livre BR",
+      href: `https://lista.mercadolivre.com.br/musica-filmes-seriados/musica/vinil/${termSlug}_NoIndex_True`,
+    },
+    {
+      name: "Mercado Libre AR",
+      href: `https://listado.mercadolibre.com.ar/musica-peliculas-series/musica/vinilo/${termSlug}_NoIndex_True`,
+    },
+    {
+      name: "Amazon BR",
+      href: `https://www.amazon.com.br/s?${amazonQuery}`,
+    },
+  ];
 }
 
 export default function VinylDetails(props: VinylDetailsProps) {
@@ -72,6 +103,20 @@ export default function VinylDetails(props: VinylDetailsProps) {
             <ul>
               {props.release?.styles?.map((style, index) => (
                 <li key={`${index}-${style}`}>{style}</li>
+              ))}
+            </ul>
+          </div>
+        )}
+        {props.showStores && props.release && (
+          <div className={styles.stores}>
+            <h3>Buy</h3>
+            <ul>
+              {getStoreLinks(props.release).map((store) => (
+                <li key={store.name}>
+                  <a href={store.href} target="_blank" rel="noopener noreferrer">
+                    {store.name}
+                  </a>
+                </li>
               ))}
             </ul>
           </div>

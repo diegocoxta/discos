@@ -48,6 +48,37 @@
   }
 }
 
+.stores {
+  margin: 20px 0;
+
+  ul {
+    list-style: none;
+    display: flex;
+    gap: 10px;
+    flex-wrap: wrap;
+  }
+
+  h3 {
+    margin-bottom: 12px;
+  }
+
+  a {
+    display: inline-block;
+    padding: 8px 14px;
+    border: 1px solid var(--accent-color);
+    border-radius: 999px;
+    font-size: 14px;
+    font-weight: 500;
+    color: var(--accent-color);
+
+    &:hover,
+    &:focus-visible {
+      background-color: var(--accent-color);
+      color: var(--background-color);
+    }
+  }
+}
+
 .instance {
   background-color: #efefef;
   padding: 16px;
