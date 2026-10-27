@@ -25,7 +25,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
       <Sleeve
         isOpened
         size={200}
-        cover={props.release?.images[0].uri}
+        cover={props.release?.images?.[0]?.uri}
         color={color}
       />
       <div className={styles.details}>

@@ -5,13 +5,24 @@ import {
   Field,
   Folder,
   Instance,
+  Pagination,
   ReleaseDetails,
   Want,
 } from "@/lib/types";
 
 import { cleanName } from "@/lib/utils";
 
-async function getResource<T>(url: string): Promise<T> {
+const PER_PAGE = 100;
+
+const EMPTY_PAGINATION: Pagination = {
+  page: 1,
+  pages: 1,
+  per_page: PER_PAGE,
+  items: 0,
+  urls: { next: "", last: "" },
+};
+
+async function getResource<T>(url: string): Promise<T | null> {
   try {
     const request = await fetch(`https://api.discogs.com/${url}`, {
       headers: {
@@ -20,13 +31,46 @@ async function getResource<T>(url: string): Promise<T> {
       next: { revalidate: 3600, tags: ['discogs'] },
     });
 
-    const data = await request.json();
+    if (!request.ok) {
+      console.error(
+        `[discogs] ${request.status} ${request.statusText} — ${url}`,
+      );
+      return null;
+    }
 
-    return data as T;
+    return (await request.json()) as T;
   } catch (error) {
     console.error(error);
-    return {} as T;
+    return null;
   }
+}
+
+async function getAllPages<K extends string, I>(
+  url: string,
+  key: K,
+): Promise<ApiResponse & Record<K, I[]>> {
+  type PageType = ApiResponse & Record<K, I[]>;
+
+  const separator = url.includes("?") ? "&" : "?";
+  const getPage = (page: number) =>
+    getResource<PageType>(`${url}${separator}per_page=${PER_PAGE}&page=${page}`);
+
+  const first = await getPage(1);
+
+  if (!first) {
+    return { pagination: EMPTY_PAGINATION, [key]: [] } as unknown as PageType;
+  }
+
+  const remaining = await Promise.all(
+    Array.from({ length: first.pagination.pages - 1 }, (_, index) =>
+      getPage(index + 2),
+    ),
+  );
+
+  return {
+    ...first,
+    [key]: [first, ...remaining].flatMap((page) => page?.[key] ?? []),
+  };
 }
 
 type GetCollectionType = ApiResponse & {
@@ -41,31 +85,33 @@ type GetCollectionType = ApiResponse & {
 export async function getCollection(
   folderid: string,
 ): Promise<GetCollectionType> {
-  const data = await getResource<GetCollectionType>(
+  const data = await getAllPages<"releases", Instance>(
     `users/diegocoxta/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
+    "releases",
   );
 
-  data.filters = {
-    artists: [
-      ...new Set(
-        data.releases?.flatMap((release) =>
-          release.basic_information.artists.map((a) => cleanName(a.name)),
+  return {
+    ...data,
+    filters: {
+      artists: [
+        ...new Set(
+          data.releases.flatMap((release) =>
+            release.basic_information.artists.map((a) => cleanName(a.name)),
+          ),
         ),
-      ),
-    ],
-    styles: [
-      ...new Set(
-        data.releases?.flatMap((release) => release.basic_information.styles),
-      ),
-    ],
-    genres: [
-      ...new Set(
-        data.releases?.flatMap((release) => release.basic_information.genres),
-      ),
-    ],
+      ],
+      styles: [
+        ...new Set(
+          data.releases.flatMap((release) => release.basic_information.styles),
+        ),
+      ],
+      genres: [
+        ...new Set(
+          data.releases.flatMap((release) => release.basic_information.genres),
+        ),
+      ],
+    },
   };
-
-  return data;
 }
 
 type GetWishlistType = ApiResponse & {
@@ -73,11 +119,10 @@ type GetWishlistType = ApiResponse & {
 };
 
 export async function getWishlist(): Promise<GetWishlistType> {
-  const data = await getResource<GetWishlistType>(
+  return getAllPages<"wants", Want>(
     "users/diegocoxta/wants?sort=added&sort_order=desc",
+    "wants",
   );
-
-  return data;
 }
 
 type GetFoldersType = { folders: Folder[] };
@@ -87,32 +132,28 @@ export async function getFolders(): Promise<GetFoldersType> {
     "users/diegocoxta/collection/folders",
   );
 
-  return data;
+  return data ?? { folders: [] };
 }
 
-export async function getRelease(id: string): Promise<ReleaseDetails> {
-  const data = await getResource<ReleaseDetails>(`releases/${id}`);
-
-  return data;
+export async function getRelease(id: string): Promise<ReleaseDetails | null> {
+  return getResource<ReleaseDetails>(`releases/${id}`);
 }
 
 export async function getInstance(
   id: string,
   instanceid: string,
-): Promise<Instance> {
-  const data = await getResource<Instance>(
+): Promise<Instance | null> {
+  return getResource<Instance>(
     `users/diegocoxta/collection/folders/0/releases/${id}/instances/${instanceid}`,
   );
-
-  return data;
 }
 
 type GetCustomFields = { fields: Field[] };
 
 export async function getCustomFields(): Promise<GetCustomFields> {
-  const fieldsData = await getResource<GetCustomFields>(
+  const data = await getResource<GetCustomFields>(
     `users/diegocoxta/collection/fields`,
   );
 
-  return fieldsData;
+  return data ?? { fields: [] };
 }

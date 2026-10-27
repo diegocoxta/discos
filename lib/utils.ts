@@ -17,6 +17,23 @@ export function formatDate(date: string) {
   });
 }
 
+export function sortByAcquisition(
+  releases: Instance[],
+  acquisitionFieldId?: number,
+): Instance[] {
+  return releases
+    .map((release) => ({
+      ...release,
+      date_added:
+        release.notes?.find((note) => note.field_id === acquisitionFieldId)
+          ?.value ?? release.date_added,
+    }))
+    .toSorted(
+      (a, b) =>
+        new Date(b.date_added).getTime() - new Date(a.date_added).getTime(),
+    );
+}
+
 export function mergeNoteData(notes?: Note[], customFields?: Field[]) {
   return (
     notes &&
