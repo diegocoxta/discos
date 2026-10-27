@@ -9,6 +9,10 @@ export function slug(name: string) {
   return slugify(name, { lower: true });
 }
 
+export function searchSlug(term: string) {
+  return slugify(term, { lower: true, strict: true });
+}
+
 export function formatDate(date: string) {
   return new Date(date).toLocaleDateString(undefined, {
     timeZone: "UTC",
