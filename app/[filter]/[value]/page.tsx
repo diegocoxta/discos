@@ -3,8 +3,7 @@ import { notFound } from "next/navigation";
 import VinylList from "@/components/VinylList";
 
 import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
-import { slug } from "@/lib/utils";
-import { Instance } from "@/lib/types";
+import { cleanName, slug, sortByAcquisition } from "@/lib/utils";
 
 export const revalidate = 3600;
 export const dynamicParams = true;
@@ -45,11 +44,11 @@ export default async function FilterPage(props: FilterPageProps) {
     (field) => field.name === "Acquisition Date",
   )?.id;
 
-  const list = collection?.releases
-    ?.filter((release) => {
+  const list = sortByAcquisition(
+    collection.releases.filter((release) => {
       if (filter === "artist") {
         return release.basic_information.artists.some(
-          (artist) => slug(artist.name) === slug(value),
+          (artist) => slug(cleanName(artist.name)) === slug(value),
         );
       }
 
@@ -60,26 +59,11 @@ export default async function FilterPage(props: FilterPageProps) {
       }
 
       return true;
-    })
-    .map((item) => ({
-      ...item,
-      date_added: item.notes.find((note) => note.field_id === customFieldDateId)
-        ?.value,
-    }))
-    .toSorted((a, b) => {
-      return (
-        new Date(
-          b.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
-            "",
-        ).getTime() -
-        new Date(
-          a.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
-            "",
-        ).getTime()
-      );
-    }) as Instance[];
+    }),
+    customFieldDateId,
+  );
 
-  if (!list || list.length === 0) {
+  if (list.length === 0) {
     notFound();
   }
 

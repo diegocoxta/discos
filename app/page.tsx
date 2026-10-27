@@ -11,7 +11,7 @@ import {
   getWishlist,
 } from "@/lib/discogs";
 
-import { Instance } from "@/lib/types";
+import { sortByAcquisition } from "@/lib/utils";
 
 export const revalidate = 3600;
 
@@ -25,24 +25,10 @@ export default async function RootPage() {
     (field) => field.name === "Acquisition Date",
   )?.id;
 
-  const listItems = collection.releases
-    .map((item) => ({
-      ...item,
-      date_added: item.notes.find((note) => note.field_id === customFieldDateId)
-        ?.value,
-    }))
-    .toSorted((a, b) => {
-      return (
-        new Date(
-          b.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
-            "",
-        ).getTime() -
-        new Date(
-          a.notes?.find((note) => note.field_id === customFieldDateId)?.value ??
-            "",
-        ).getTime()
-      );
-    }) as Instance[];
+  const listItems = sortByAcquisition(
+    collection.releases,
+    customFieldDateId,
+  );
 
   return (
     <Container>
