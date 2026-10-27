@@ -17,7 +17,7 @@ export default function Header(props: HeaderProps) {
     <header className={styles.container}>
       <h1 className={styles.logo}>
         <Vinyl size={20} />
-        <span>myvinyl.</span>
+        <span>discos.</span>
       </h1>
 
       <ul className={styles.nav}>
