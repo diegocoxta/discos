@@ -10,7 +10,7 @@ const sourceSans = Source_Sans_3({
 });
 
 export const metadata: Metadata = {
-  title: "myvinyl.",
+  title: "discos.",
   description: "My personal collection of vinyl records, and the ones I want.",
 };
 
