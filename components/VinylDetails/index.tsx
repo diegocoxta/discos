@@ -26,6 +26,11 @@ function getStoreLinks(release: ReleaseDetails) {
     rh: "p_n_binding_browse-bin:19416266011",
   });
 
+  const amazonUsQuery = new URLSearchParams({
+    k: `${term} vinyl`,
+    i: "popular",
+  });
+
   return [
     {
       name: "Mercado Livre BR",
@@ -38,6 +43,10 @@ function getStoreLinks(release: ReleaseDetails) {
     {
       name: "Amazon BR",
       href: `https://www.amazon.com.br/s?${amazonQuery}`,
+    },
+    {
+      name: "Amazon US",
+      href: `https://www.amazon.com/s?${amazonUsQuery}`,
     },
   ];
 }
