@@ -77,11 +77,14 @@
   background-color: var(--text-color);
   color: #fff;
   cursor: pointer;
-  transition: all 0.2s ease-in;
+  transition: transform 0.2s;
 
   &:hover:not(:disabled) {
-    background-color: var(--accent-color);
-    transform: rotate(10deg);
+    transform: scale(1.05);
+  }
+
+  &:active:not(:disabled) {
+    transform: scale(0.95);
   }
 
   &:disabled {
