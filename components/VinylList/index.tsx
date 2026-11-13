@@ -16,6 +16,7 @@ import styles from "./styles.module.css";
 interface VinylListProps {
   customFields?: Field[];
   list: Want[] | Instance[];
+  heading?: { title: string; count: number };
 }
 
 function search(
@@ -87,6 +88,15 @@ export default function VinylList(props: VinylListProps) {
           <Shuffle />
         </button>
       </div>
+      {props.heading && (
+        <div className={styles.heading}>
+          <h2>{props.heading.title}</h2>
+          <p>
+            {props.heading.count}{" "}
+            {props.heading.count === 1 ? "disco" : "discos"}
+          </p>
+        </div>
+      )}
       <ul className={styles.list}>
         {list.length === 0 && (
           <p>

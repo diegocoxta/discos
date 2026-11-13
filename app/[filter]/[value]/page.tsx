@@ -8,6 +8,11 @@ import { cleanName, slug, sortByAcquisition } from "@/lib/utils";
 export const revalidate = 3600;
 export const dynamicParams = true;
 
+const FOLDER_NAMES: Record<string, string> = {
+  all: "Todos os discos",
+  uncategorized: "Sem categoria",
+};
+
 interface FilterPageProps {
   params: {
     value: string;
@@ -38,6 +43,12 @@ export async function generateStaticParams() {
 export default async function FilterPage(props: FilterPageProps) {
   const { value, filter } = await props.params;
   const collection = await getCollection(filter === "folder" ? value : "0");
+  const folder =
+    filter === "folder"
+      ? (await getFolders()).folders.find(
+          (item) => item.id.toString() === value,
+        )
+      : undefined;
   const customFields = await getCustomFields();
 
   const customFieldDateId = customFields.fields.find(
@@ -67,5 +78,16 @@ export default async function FilterPage(props: FilterPageProps) {
     notFound();
   }
 
-  return <VinylList list={list} customFields={customFields.fields} />;
+  return (
+    <VinylList
+      list={list}
+      customFields={customFields.fields}
+      heading={
+        folder && {
+          title: FOLDER_NAMES[folder.name.toLowerCase()] ?? folder.name,
+          count: list.length,
+        }
+      }
+    />
+  );
 }

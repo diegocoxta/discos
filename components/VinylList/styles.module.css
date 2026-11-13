@@ -160,3 +160,16 @@
   padding-left: 10px;
   border-left: 2px solid var(--accent-color);
 }
+
+.heading {
+  margin: -20px 0 40px;
+  text-align: center;
+
+  h2 {
+    font-size: 24px;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
