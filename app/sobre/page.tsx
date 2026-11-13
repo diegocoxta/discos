@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 
 import Container from "@/components/Container";
-import Header from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
 import Stats from "@/components/Stats";
 import Footer from "@/components/Footer";
 
@@ -25,12 +25,7 @@ export default async function AboutPage() {
 
   return (
     <Container>
-      <Header
-        counter={{
-          wishlist: wishlist.pagination.items,
-          collection: collection.pagination.items,
-        }}
-      />
+      <SiteHeader />
       <section className={styles.intro}>
         <h2>Sobre a coleção</h2>
         <p>

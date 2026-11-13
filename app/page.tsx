@@ -1,16 +1,13 @@
 import Container from "@/components/Container";
-import Header from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
 import VinylList from "@/components/VinylList";
 import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
-import Intro from "@/components/Intro";
 
 import {
   getCollection,
   getCustomFields,
   getFolders,
-  getProfile,
-  getWishlist,
 } from "@/lib/discogs";
 
 import { sortByAcquisition } from "@/lib/utils";
@@ -19,8 +16,6 @@ export const revalidate = 3600;
 
 export default async function RootPage() {
   const collection = await getCollection("0");
-  const wishlist = await getWishlist();
-  const profile = await getProfile();
   const folders = await getFolders();
   const customFields = await getCustomFields();
 
@@ -33,23 +28,9 @@ export default async function RootPage() {
     customFieldDateId,
   );
 
-  const since = listItems.length
-    ? new Date(listItems[listItems.length - 1].date_added).getUTCFullYear()
-    : undefined;
-
   return (
     <Container>
-      <Intro
-        profile={profile}
-        total={collection.pagination.items}
-        since={since}
-      />
-      <Header
-        counter={{
-          wishlist: wishlist.pagination.items,
-          collection: collection.pagination.items,
-        }}
-      />
+      <SiteHeader />
       <VinylList list={listItems} customFields={customFields.fields} />
       <Filters folders={folders.folders} />
       <Footer />
