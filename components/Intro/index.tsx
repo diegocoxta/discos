@@ -1,5 +1,3 @@
-import Link from "next/link";
-
 import Vinyl from "@/components/Vinyl";
 
 import { Profile } from "@/lib/types";
@@ -36,9 +34,6 @@ export default function Intro(props: IntroProps) {
         {props.since ? `, colecionados desde ${props.since}` : ""}, e os que
         ainda estou caçando. São {props.total} até agora.
       </p>
-      <Link href="/sobre" className={styles.link}>
-        Mais sobre a coleção
-      </Link>
     </section>
   );
 }
