@@ -61,6 +61,15 @@ export default function VinylList(props: VinylListProps) {
 
   return (
     <>
+      {props.heading && (
+        <div className={styles.heading}>
+          <h2>{props.heading.title}</h2>
+          <p>
+            {props.heading.count}{" "}
+            {props.heading.count === 1 ? "disco" : "discos"}
+          </p>
+        </div>
+      )}
       <div className={styles.searchRow}>
         <div className={styles.searchContainer}>
           <input
@@ -88,15 +97,6 @@ export default function VinylList(props: VinylListProps) {
           <Shuffle />
         </button>
       </div>
-      {props.heading && (
-        <div className={styles.heading}>
-          <h2>{props.heading.title}</h2>
-          <p>
-            {props.heading.count}{" "}
-            {props.heading.count === 1 ? "disco" : "discos"}
-          </p>
-        </div>
-      )}
       <ul className={styles.list}>
         {list.length === 0 && (
           <p>
