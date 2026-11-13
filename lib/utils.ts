@@ -89,8 +89,8 @@ export function getCollectionStats(releases: Instance[]) {
   return {
     total: releases.length,
     artistCount: artists.length,
-    topArtists: artists.slice(0, 5),
+    topArtists: artists.slice(0, 10),
     topDecade: decades[0],
-    topStyles: styles.slice(0, 5),
+    topStyles: styles.slice(0, 10),
   };
 }
