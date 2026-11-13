@@ -1,8 +1,8 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
 import { Search, Shuffle, X } from "lucide-react";
 
@@ -44,10 +44,25 @@ function search(
   return results.map((result) => result.item);
 }
 
-export default function VinylList(props: VinylListProps) {
+const SEARCH_PARAM = "s";
+
+function VinylListContent(props: VinylListProps & { initialQuery: string }) {
   const router = useRouter();
-  const [searchQuery, setSearchQuery] = useState("");
+  const [searchQuery, setSearchQuery] = useState(props.initialQuery);
   const list = search(props.list, searchQuery);
+
+  function updateSearch(value: string) {
+    const url = new URL(window.location.href);
+
+    if (value.trim()) {
+      url.searchParams.set(SEARCH_PARAM, value);
+    } else {
+      url.searchParams.delete(SEARCH_PARAM);
+    }
+
+    window.history.replaceState(null, "", url);
+    setSearchQuery(value);
+  }
 
   function openRandomRecord() {
     const record = list[Math.floor(Math.random() * list.length)];
@@ -72,11 +87,11 @@ export default function VinylList(props: VinylListProps) {
             className={styles.searchBar}
             value={searchQuery}
             placeholder={placeholder}
-            onChange={(e) => setSearchQuery(e.currentTarget.value)}
+            onChange={(e) => updateSearch(e.currentTarget.value)}
           />
           <div className={styles.searchIcon}>
             {searchQuery !== "" && (
-              <X onClick={() => setSearchQuery("")} data-clickable />
+              <X onClick={() => updateSearch("")} data-clickable />
             )}
             {searchQuery === "" && <Search />}
           </div>
@@ -128,7 +143,7 @@ export default function VinylList(props: VinylListProps) {
 
               <p
                 onClick={() =>
-                  setSearchQuery(record.basic_information.artists[0].name)
+                  updateSearch(record.basic_information.artists[0].name)
                 }
                 className={styles.artist}
               >
@@ -145,5 +160,24 @@ export default function VinylList(props: VinylListProps) {
         })}
       </ul>
     </>
+  );
+}
+
+function VinylListWithParams(props: VinylListProps) {
+  const searchParams = useSearchParams();
+
+  return (
+    <VinylListContent
+      {...props}
+      initialQuery={searchParams.get(SEARCH_PARAM) ?? ""}
+    />
+  );
+}
+
+export default function VinylList(props: VinylListProps) {
+  return (
+    <Suspense fallback={<VinylListContent {...props} initialQuery="" />}>
+      <VinylListWithParams {...props} />
+    </Suspense>
   );
 }
