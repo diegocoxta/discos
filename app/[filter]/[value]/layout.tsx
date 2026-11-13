@@ -6,7 +6,6 @@ import Footer from "@/components/Footer";
 import {
   getCollection,
   getFolders,
-  getProfile,
   getWishlist,
 } from "@/lib/discogs";
 
@@ -17,13 +16,11 @@ export default async function FilterLayoutPage({
 }>) {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
-  const profile = await getProfile();
   const folders = await getFolders();
 
   return (
     <Container>
       <Header
-        profile={profile}
         counter={{
           wishlist: wishlist.pagination.items,
           collection: collection.pagination.items,

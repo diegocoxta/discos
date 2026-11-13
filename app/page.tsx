@@ -39,14 +39,17 @@ export default async function RootPage() {
 
   return (
     <Container>
-      <Header
+      <Intro
         profile={profile}
+        total={collection.pagination.items}
+        since={since}
+      />
+      <Header
         counter={{
           wishlist: wishlist.pagination.items,
           collection: collection.pagination.items,
         }}
       />
-      <Intro total={collection.pagination.items} since={since} />
       <VinylList list={listItems} customFields={customFields.fields} />
       <Filters folders={folders.folders} />
       <Footer />

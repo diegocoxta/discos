@@ -1,8 +1,14 @@
 .container {
   max-width: 640px;
-  margin: 0 auto 50px;
+  margin: 0 auto 30px;
   padding: 0 30px;
   text-align: center;
+}
+
+.avatar {
+  display: flex;
+  justify-content: center;
+  margin-bottom: 24px;
 }
 
 .title {
