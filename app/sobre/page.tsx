@@ -8,8 +8,6 @@ import Footer from "@/components/Footer";
 import { getCollection, getWishlist } from "@/lib/discogs";
 import { getCollectionStats } from "@/lib/utils";
 
-import styles from "./styles.module.css";
-
 export const revalidate = 3600;
 
 export const metadata: Metadata = {
@@ -26,13 +24,6 @@ export default async function AboutPage() {
   return (
     <Container>
       <SiteHeader />
-      <section className={styles.intro}>
-        <h2>Sobre a coleção</h2>
-        <p>
-          Tudo começou com um disco e virou uma estante inteira. Aqui estão os
-          números do que eu ouvi, comprei e guardei até agora.
-        </p>
-      </section>
       <Stats
         {...stats}
         wishlistCount={wishlist.pagination.items}
