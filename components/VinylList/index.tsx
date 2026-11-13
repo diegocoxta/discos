@@ -93,15 +93,6 @@ export default function VinylList(props: VinylListProps) {
         </button>
       </div>
       <ul className={styles.list}>
-        {props.heading && (
-          <li className={styles.heading}>
-            <strong>{props.heading.title}</strong>
-            <span>
-              {props.heading.count}{" "}
-              {props.heading.count === 1 ? "disco" : "discos"}
-            </span>
-          </li>
-        )}
         {list.length === 0 && (
           <p>
             {searchQuery !== ""
