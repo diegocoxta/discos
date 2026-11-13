@@ -20,7 +20,9 @@ interface VinylDetailsProps {
 const FIELD_LABELS: Record<string, string> = {
   Color: "Cor",
   "Acquisition Date": "Data de aquisição",
-  Source: "Onde comprei",
+  "Acquisition Location": "Local de aquisição",
+  "Sleeve Condition": "Condição da capa",
+  "Media Condition": "Condição da mídia",
 };
 
 const STORY_FIELD = "Story";

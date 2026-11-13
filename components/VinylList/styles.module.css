@@ -70,7 +70,8 @@
   align-items: center;
   justify-content: center;
   flex-shrink: 0;
-  aspect-ratio: 1;
+  width: 52px;
+  height: 52px;
   border: 0;
   border-radius: 50%;
   background-color: var(--text-color);
@@ -96,6 +97,7 @@
 
 .searchBar {
   display: flex;
+  height: 52px;
   padding: 14px;
   width: 100%;
   border-radius: 40px;
