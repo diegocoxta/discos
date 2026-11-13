@@ -150,7 +150,8 @@ function VinylListContent(props: VinylListProps & { initialQuery: string }) {
                 {cleanName(record.basic_information.artists[0].name)}
               </p>
               <p className={styles.date}>
-                Adicionado em {formatDate(record.date_added)}
+                {"instance_id" in record ? "Adquirido" : "Adicionado"} em{" "}
+                {formatDate(record.date_added)}
               </p>
               {!("instance_id" in record) && record.notes && (
                 <p className={styles.note}>“{record.notes}”</p>
