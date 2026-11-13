@@ -22,10 +22,10 @@ export default function Header(props: HeaderProps) {
 
       <ul className={styles.nav}>
         <li
-          className={`${styles.item} ${pathname !== "/wishlist" ? styles.active : ""}`}
+          className={`${styles.item} ${pathname !== "/wishlist" && pathname !== "/sobre" ? styles.active : ""}`}
         >
           <Link href="/" className={styles.link}>
-            Collection
+            Coleção
             <span className={styles.counter}>
               {props.counter["collection"] || 0}
             </span>
@@ -35,10 +35,17 @@ export default function Header(props: HeaderProps) {
           className={`${styles.item} ${pathname === "/wishlist" ? styles.active : ""}`}
         >
           <Link href="/wishlist" className={styles.link}>
-            Wishlist
+            Desejos
             <span className={styles.counter}>
               {props.counter["wishlist"] || 0}
             </span>
+          </Link>
+        </li>
+        <li
+          className={`${styles.item} ${pathname === "/sobre" ? styles.active : ""}`}
+        >
+          <Link href="/sobre" className={styles.link}>
+            Sobre
           </Link>
         </li>
       </ul>

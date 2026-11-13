@@ -7,8 +7,8 @@ import { Search, X } from "lucide-react";
 
 import Sleeve from "@/components/Sleeve";
 
-import { cleanName, formatDate, slug } from "@/lib/utils";
-import { Field, Instance, Release, Want } from "@/lib/types";
+import { cleanName, createVinylLink, formatDate } from "@/lib/utils";
+import { Field, Instance, Want } from "@/lib/types";
 
 import styles from "./styles.module.css";
 
@@ -46,12 +46,6 @@ export default function VinylList(props: VinylListProps) {
   const [searchQuery, setSearchQuery] = useState("");
   const list = search(props.list, searchQuery);
 
-  function createVinylLink(record: Want | Release) {
-    return `/vinyl/${record.id}${"instance_id" in record ? `/${record.instance_id}` : ""}/${slug(record.basic_information.title)}-${slug(
-      record.basic_information.artists[0].name,
-    )}`;
-  }
-
   const customFieldColorId = props.customFields?.find(
     (field) => field.name === "Color",
   )?.id;
@@ -63,7 +57,7 @@ export default function VinylList(props: VinylListProps) {
           type="text"
           className={styles.searchBar}
           value={searchQuery}
-          placeholder="Search by title, artist, genre, style, year, etc."
+          placeholder="Busque por título, artista, gênero, estilo, ano etc."
           onChange={(e) => setSearchQuery(e.currentTarget.value)}
         />
         <div className={styles.searchIcon}>
@@ -77,8 +71,8 @@ export default function VinylList(props: VinylListProps) {
         {list.length === 0 && (
           <p>
             {searchQuery !== ""
-              ? `No results found by "${searchQuery}"`
-              : "No results found."}
+              ? `Nenhum resultado para "${searchQuery}"`
+              : "Nenhum resultado."}
           </p>
         )}
         {list.map((record, index: number) => {
@@ -116,8 +110,11 @@ export default function VinylList(props: VinylListProps) {
                 {cleanName(record.basic_information.artists[0].name)}
               </p>
               <p className={styles.date}>
-                Added on {formatDate(record.date_added)}
+                Adicionado em {formatDate(record.date_added)}
               </p>
+              {!("instance_id" in record) && record.notes && (
+                <p className={styles.note}>“{record.notes}”</p>
+              )}
             </li>
           );
         })}

@@ -17,6 +17,14 @@ interface VinylDetailsProps {
   showStores?: boolean;
 }
 
+const FIELD_LABELS: Record<string, string> = {
+  Color: "Cor",
+  "Acquisition Date": "Data de aquisição",
+  Source: "Onde comprei",
+};
+
+const STORY_FIELD = "Story";
+
 function getStoreLinks(release: ReleaseDetails) {
   const term = `${cleanName(release.artists[0].name)} ${release.title}`;
   const termSlug = searchSlug(term);
@@ -54,6 +62,10 @@ function getStoreLinks(release: ReleaseDetails) {
 export default function VinylDetails(props: VinylDetailsProps) {
   const notes = mergeNoteData(props.instance?.notes, props.customFields);
   const color = notes?.find((note) => note.name === "Color")?.value;
+  const fields = notes
+    ?.filter((field) => field.public && field.name !== STORY_FIELD)
+    .sort((a, b) => a.position! - b.position!);
+  const story = notes?.find((note) => note.name === STORY_FIELD)?.value;
 
   return (
     <div
@@ -73,29 +85,27 @@ export default function VinylDetails(props: VinylDetailsProps) {
         <p>
           {cleanName(props.release?.artists[0].name)} • {props.release?.year}
         </p>
-        {notes && notes.length > 0 && (
+        {fields && fields.length > 0 && (
           <div
             className={styles.instance}
             style={{
               backgroundColor: color ? `${color}1A` : "#efefef",
             }}
           >
-            {notes
-              ?.filter((field) => field.public)
-              ?.sort((a, b) => a.position! - b.position!)
-              ?.map((field) => (
-                <p key={field.name}>
-                  <strong>{field.name}:</strong>
-                  {field.name?.includes("Date")
-                    ? formatDate(field.value)
-                    : field.value}
-                </p>
-              ))}
+            {fields.map((field) => (
+              <p key={field.name}>
+                <strong>{FIELD_LABELS[field.name!] ?? field.name}:</strong>
+                {field.name?.includes("Date")
+                  ? formatDate(field.value)
+                  : field.value}
+              </p>
+            ))}
           </div>
         )}
+        {story && <blockquote className={styles.story}>{story}</blockquote>}
         {props.release?.tracklist.length > 0 && (
           <div className={styles.tracklist}>
-            <h3>Tracklist</h3>
+            <h3>Faixas</h3>
             <ol>
               {props.release.tracklist.map((track, index) => (
                 <li key={index} className={styles.track}>
@@ -108,7 +118,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
         )}
         {props.release?.styles?.length > 0 && (
           <div className={styles.styles}>
-            <h3>Styles</h3>
+            <h3>Estilos</h3>
             <ul>
               {props.release?.styles?.map((style, index) => (
                 <li key={`${index}-${style}`}>{style}</li>
@@ -118,7 +128,7 @@ export default function VinylDetails(props: VinylDetailsProps) {
         )}
         {props.showStores && props.release && (
           <div className={styles.stores}>
-            <h3>Buy</h3>
+            <h3>Comprar</h3>
             <ul>
               {getStoreLinks(props.release).map((store) => (
                 <li key={store.name}>

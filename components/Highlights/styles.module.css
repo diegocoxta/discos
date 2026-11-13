@@ -1,0 +1,42 @@
+.container {
+  max-width: 1240px;
+  margin: 0 auto 50px;
+  padding: 0 30px;
+}
+
+.title {
+  font-size: 22px;
+  margin-bottom: 20px;
+  text-align: center;
+
+  @media (width >= 768px) {
+    text-align: left;
+  }
+}
+
+.list {
+  display: flex;
+  gap: 24px;
+  overflow-x: auto;
+  padding: 10px 0 20px;
+  list-style: none;
+}
+
+.item {
+  flex: 0 0 160px;
+  transition: transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+  }
+}
+
+.recordTitle {
+  font-size: 16px;
+  margin-top: 8px;
+}
+
+.artist {
+  font-size: 14px;
+  font-style: italic;
+}

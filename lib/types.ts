@@ -21,6 +21,7 @@ export interface Want {
   date_added: string;
   basic_information: BasicInformation;
   rating: number;
+  notes?: string;
 }
 
 export interface Release {
