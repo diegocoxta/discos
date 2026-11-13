@@ -1,7 +1,11 @@
 {
-  "name": "discos.diegocoxta.com",
+  "name": "discos",
   "version": "0.1.0",
   "private": true,
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/diegocoxta/discos.git"
+  },
   "scripts": {
     "predev": "open -a \"Google Chrome\" http://localhost:3000",
     "dev": "next dev",
