@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Stats from "@/components/Stats";
 import Footer from "@/components/Footer";
 
-import { getCollection, getWishlist } from "@/lib/discogs";
+import { getCollection, getProfile, getWishlist } from "@/lib/discogs";
 import { getCollectionStats } from "@/lib/utils";
 
 import styles from "./styles.module.css";
@@ -21,11 +21,13 @@ export const metadata: Metadata = {
 export default async function AboutPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
+  const profile = await getProfile();
   const stats = getCollectionStats(collection.releases);
 
   return (
     <Container>
       <Header
+        profile={profile}
         counter={{
           wishlist: wishlist.pagination.items,
           collection: collection.pagination.items,

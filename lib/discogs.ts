@@ -6,6 +6,7 @@ import {
   Folder,
   Instance,
   Pagination,
+  Profile,
   ReleaseDetails,
   Want,
 } from "@/lib/types";
@@ -156,4 +157,8 @@ export async function getCustomFields(): Promise<GetCustomFields> {
   );
 
   return data ?? { fields: [] };
+}
+
+export async function getProfile(): Promise<Profile | null> {
+  return getResource<Profile>("users/diegocoxta");
 }

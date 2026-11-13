@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import VinylList from "@/components/VinylList";
 import Footer from "@/components/Footer";
 
-import { getCollection, getWishlist } from "@/lib/discogs";
+import { getCollection, getProfile, getWishlist } from "@/lib/discogs";
 
 export const revalidate = 3600;
 
@@ -17,10 +17,12 @@ export const metadata: Metadata = {
 export default async function WishlistPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
+  const profile = await getProfile();
 
   return (
     <Container>
       <Header
+        profile={profile}
         counter={{
           wishlist: wishlist.pagination.items,
           collection: collection.pagination.items,

@@ -204,3 +204,10 @@ export interface Field {
   options?: string[];
   lines?: number;
 }
+
+export interface Profile {
+  name: string;
+  location: string;
+  avatar_url: string;
+  profile: string;
+}

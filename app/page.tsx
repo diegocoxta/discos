@@ -9,6 +9,7 @@ import {
   getCollection,
   getCustomFields,
   getFolders,
+  getProfile,
   getWishlist,
 } from "@/lib/discogs";
 
@@ -19,6 +20,7 @@ export const revalidate = 3600;
 export default async function RootPage() {
   const collection = await getCollection("0");
   const wishlist = await getWishlist();
+  const profile = await getProfile();
   const folders = await getFolders();
   const customFields = await getCustomFields();
 
@@ -38,6 +40,7 @@ export default async function RootPage() {
   return (
     <Container>
       <Header
+        profile={profile}
         counter={{
           wishlist: wishlist.pagination.items,
           collection: collection.pagination.items,
