@@ -29,7 +29,12 @@ export default function Filters(props: FiltersProps) {
           <div className={styles.scrollArea}>
             {props.folders &&
               props.folders
-                .filter((i) => i.count > 0 && i.name.toLowerCase() !== "all")
+                .filter(
+                  (i) =>
+                    i.count > 0 &&
+                    !["all", "uncategorized"].includes(i.name.toLowerCase()),
+                )
+                .toSorted((a, b) => b.count - a.count)
                 .map((loc) => (
                   <Link
                     href={`/folder/${loc.id}`}
@@ -59,7 +64,7 @@ export default function Filters(props: FiltersProps) {
           >
             <span className={styles.itemTitle}>
               {pathname === `/` ? <FolderOpen /> : <FolderClosed />}
-              All records
+              Todos os discos
             </span>
           </Link>
         </nav>
@@ -68,7 +73,7 @@ export default function Filters(props: FiltersProps) {
       <button
         onClick={() => setIsOpen(!isOpen)}
         className={styles.fab}
-        aria-label="Toggle menu"
+        aria-label="Abrir ou fechar menu de pastas"
       >
         {isOpen ? (
           <X size={32} color="white" />
