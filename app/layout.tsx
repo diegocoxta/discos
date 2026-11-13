@@ -9,9 +9,26 @@ const sourceSans = Source_Sans_3({
   weight: ["400", "700"],
 });
 
+const description =
+  "A coleção pessoal de discos de vinil do Diego Costa: o que está na estante e o que ainda está na lista de desejos.";
+
 export const metadata: Metadata = {
-  title: "discos.",
-  description: "My personal collection of vinyl records, and the ones I want.",
+  metadataBase: new URL("https://discos.diegocoxta.com"),
+  title: {
+    default: "discos. — a coleção de vinis do Diego Costa",
+    template: "%s | discos.",
+  },
+  description,
+  openGraph: {
+    title: "discos. — a coleção de vinis do Diego Costa",
+    description,
+    siteName: "discos.",
+    type: "website",
+    locale: "pt_BR",
+  },
+  twitter: {
+    card: "summary_large_image",
+  },
 };
 
 export default function RootLayout({
@@ -22,7 +39,7 @@ export default function RootLayout({
   modal: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className={`${sourceSans.variable}`}>
+    <html lang="pt-BR" className={`${sourceSans.variable}`}>
       <body>
         {modal}
         {children}
