@@ -11,7 +11,7 @@ export const revalidate = 3600;
 
 export const metadata: Metadata = {
   title: "Lista de desejos",
-  description: "Os discos que o Diego ainda está procurando.",
+  description: "Os discos que ainda estou procurando.",
 };
 
 export default async function WishlistPage() {

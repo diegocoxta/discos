@@ -1,10 +1,14 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "discos. — a coleção de vinis do Diego Costa";
+import { getProfile } from "@/lib/discogs";
+
+export const alt = "discos. — minha coleção de vinis";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
-export default function Image() {
+export default async function Image() {
+  const profile = await getProfile();
+
   return new ImageResponse(
     (
       <div
@@ -41,7 +45,11 @@ export default function Image() {
         </div>
         <div style={{ display: "flex", flexDirection: "column" }}>
           <div style={{ fontSize: 120, fontWeight: 700 }}>discos.</div>
-          <div style={{ fontSize: 36 }}>A coleção de vinis do Diego Costa</div>
+          <div style={{ fontSize: 36 }}>
+            {profile?.name
+              ? `A coleção de vinis de ${profile.name}`
+              : "Minha coleção de vinis"}
+          </div>
         </div>
       </div>
     ),

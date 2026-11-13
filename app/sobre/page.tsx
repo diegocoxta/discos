@@ -13,7 +13,7 @@ export const revalidate = 3600;
 export const metadata: Metadata = {
   title: "Sobre a coleção",
   description:
-    "Números e curiosidades da coleção de discos do Diego: artistas, estilos e décadas favoritas.",
+    "Números e curiosidades da minha coleção de discos: artistas, estilos e décadas favoritas.",
 };
 
 export default async function AboutPage() {

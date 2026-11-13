@@ -1,27 +1,22 @@
+import { getProfile } from "@/lib/discogs";
+
 import styles from "./styles.module.css";
 
-export default function Footer() {
+export default async function Footer() {
+  const profile = await getProfile();
+
   return (
     <div className={styles.container}>
       <p className={styles.text}>
-        Feito por Diego Costa. Os dados vêm da{" "}
+        {profile?.name ? `Feito por ${profile.name}. ` : ""}Os dados vêm da{" "}
         <a
-          href="https://www.discogs.com/user/diegocoxta"
+          href={`https://www.discogs.com/user/${process.env.DISCOGS_USERNAME}`}
           target="_blank"
           rel="noopener noreferrer"
         >
           minha conta no Discogs
         </a>
         .
-      </p>
-      <p className={styles.text}>
-        <a
-          href="https://github.com/diegocoxta/discos"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Código-fonte no GitHub
-        </a>
       </p>
     </div>
   );

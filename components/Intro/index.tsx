@@ -15,9 +15,12 @@ function endSentence(text: string) {
 }
 
 export default function Intro(props: IntroProps) {
-  const greeting = props.profile?.profile.trim()
-    ? endSentence(props.profile.profile.trim())
-    : "Oi, eu sou o Diego.";
+  const bio = props.profile?.profile?.trim();
+  const greeting = bio
+    ? endSentence(bio)
+    : props.profile?.name
+      ? `Oi, eu sou ${props.profile.name}.`
+      : "";
 
   return (
     <section className={styles.container}>
@@ -30,7 +33,8 @@ export default function Intro(props: IntroProps) {
       </div>
       <h1 className={styles.title}>Minha estante de discos</h1>
       <p className={styles.text}>
-        {greeting} Estes são os discos que moram na minha estante
+        {greeting ? `${greeting} ` : ""}Estes são os discos que moram na minha
+        estante
         {props.since ? `, colecionados desde ${props.since}` : ""}, e os que
         ainda estou caçando. São {props.total} até agora.
       </p>
