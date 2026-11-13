@@ -28,7 +28,7 @@ export default function Intro(props: IntroProps) {
           coverAlt={props.profile?.name}
         />
       </div>
-      <h1 className={styles.title}>A coleção de discos do Diego</h1>
+      <h1 className={styles.title}>Minha estante de discos</h1>
       <p className={styles.text}>
         {greeting} Estes são os discos que moram na minha estante
         {props.since ? `, colecionados desde ${props.since}` : ""}, e os que
