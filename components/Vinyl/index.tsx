@@ -32,7 +32,7 @@ export default function Vinyl(props: VinylProps) {
             width={size}
             height={size}
             src={cover}
-            alt="Vinyl Cover"
+            alt="Capa do disco"
             className={styles.cover}
           />
         )}

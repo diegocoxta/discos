@@ -29,7 +29,7 @@ export default function Box(props: BoxProps) {
               key={index}
               fill
               src={cover}
-              alt={`Vinyl Cover ${index + 1}`}
+              alt={`Capa do disco ${index + 1}`}
               className={styles.coverItem}
               style={{
                 zIndex: 10 - index * 2,
