@@ -4,7 +4,6 @@ import VinylList from "@/components/VinylList";
 import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 import Intro from "@/components/Intro";
-import Highlights from "@/components/Highlights";
 
 import {
   getCollection,
@@ -27,10 +26,6 @@ export default async function RootPage() {
     (field) => field.name === "Acquisition Date",
   )?.id;
 
-  const customFieldColorId = customFields.fields.find(
-    (field) => field.name === "Color",
-  )?.id;
-
   const listItems = sortByAcquisition(
     collection.releases,
     customFieldDateId,
@@ -49,11 +44,6 @@ export default async function RootPage() {
         }}
       />
       <Intro total={collection.pagination.items} since={since} />
-      <Highlights
-        title="Últimas aquisições"
-        records={listItems.slice(0, 8)}
-        colorFieldId={customFieldColorId}
-      />
       <VinylList list={listItems} customFields={customFields.fields} />
       <Filters folders={folders.folders} />
       <Footer />
