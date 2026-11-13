@@ -1,20 +1,22 @@
 "use client";
 
-import { useState } from "react";
+import { Suspense, useState } from "react";
 import Link from "next/link";
+import { useRouter, useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
-import { Search, X } from "lucide-react";
+import { Search, Shuffle, X } from "lucide-react";
 
 import Sleeve from "@/components/Sleeve";
 
-import { cleanName, formatDate, slug } from "@/lib/utils";
-import { Field, Instance, Release, Want } from "@/lib/types";
+import { cleanName, createVinylLink, formatDate } from "@/lib/utils";
+import { Field, Instance, Want } from "@/lib/types";
 
 import styles from "./styles.module.css";
 
 interface VinylListProps {
   customFields?: Field[];
   list: Want[] | Instance[];
+  heading?: { title: string; count: number };
 }
 
 function search(
@@ -42,15 +44,35 @@ function search(
   return results.map((result) => result.item);
 }
 
-export default function VinylList(props: VinylListProps) {
-  const [searchQuery, setSearchQuery] = useState("");
+const SEARCH_PARAM = "s";
+
+function VinylListContent(props: VinylListProps & { initialQuery: string }) {
+  const router = useRouter();
+  const [searchQuery, setSearchQuery] = useState(props.initialQuery);
   const list = search(props.list, searchQuery);
 
-  function createVinylLink(record: Want | Release) {
-    return `/vinyl/${record.id}${"instance_id" in record ? `/${record.instance_id}` : ""}/${slug(record.basic_information.title)}-${slug(
-      record.basic_information.artists[0].name,
-    )}`;
+  function updateSearch(value: string) {
+    const url = new URL(window.location.href);
+
+    if (value.trim()) {
+      url.searchParams.set(SEARCH_PARAM, value);
+    } else {
+      url.searchParams.delete(SEARCH_PARAM);
+    }
+
+    window.history.replaceState(null, "", url);
+    setSearchQuery(value);
   }
+
+  function openRandomRecord() {
+    const record = list[Math.floor(Math.random() * list.length)];
+
+    router.push(createVinylLink(record));
+  }
+
+  const placeholder = props.heading
+    ? `Buscar em ${props.heading.title} (${props.heading.count} ${props.heading.count === 1 ? "disco" : "discos"})`
+    : "Busque por título, artista, gênero, estilo, ano etc.";
 
   const customFieldColorId = props.customFields?.find(
     (field) => field.name === "Color",
@@ -58,27 +80,39 @@ export default function VinylList(props: VinylListProps) {
 
   return (
     <>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          className={styles.searchBar}
-          value={searchQuery}
-          placeholder="Search by title, artist, genre, style, year, etc."
-          onChange={(e) => setSearchQuery(e.currentTarget.value)}
-        />
-        <div className={styles.searchIcon}>
-          {searchQuery !== "" && (
-            <X onClick={() => setSearchQuery("")} data-clickable />
-          )}
-          {searchQuery === "" && <Search />}
+      <div className={styles.searchRow}>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            className={styles.searchBar}
+            value={searchQuery}
+            placeholder={placeholder}
+            onChange={(e) => updateSearch(e.currentTarget.value)}
+          />
+          <div className={styles.searchIcon}>
+            {searchQuery !== "" && (
+              <X onClick={() => updateSearch("")} data-clickable />
+            )}
+            {searchQuery === "" && <Search />}
+          </div>
         </div>
+        <button
+          type="button"
+          className={styles.shuffle}
+          onClick={openRandomRecord}
+          disabled={list.length === 0}
+          aria-label="Abrir um disco aleatório"
+          title="Abrir um disco aleatório"
+        >
+          <Shuffle />
+        </button>
       </div>
       <ul className={styles.list}>
         {list.length === 0 && (
           <p>
             {searchQuery !== ""
-              ? `No results found by "${searchQuery}"`
-              : "No results found."}
+              ? `Nenhum resultado para "${searchQuery}"`
+              : "Nenhum resultado."}
           </p>
         )}
         {list.map((record, index: number) => {
@@ -109,19 +143,41 @@ export default function VinylList(props: VinylListProps) {
 
               <p
                 onClick={() =>
-                  setSearchQuery(record.basic_information.artists[0].name)
+                  updateSearch(record.basic_information.artists[0].name)
                 }
                 className={styles.artist}
               >
                 {cleanName(record.basic_information.artists[0].name)}
               </p>
               <p className={styles.date}>
-                Added on {formatDate(record.date_added)}
+                Adicionado em {formatDate(record.date_added)}
               </p>
+              {!("instance_id" in record) && record.notes && (
+                <p className={styles.note}>“{record.notes}”</p>
+              )}
             </li>
           );
         })}
       </ul>
     </>
+  );
+}
+
+function VinylListWithParams(props: VinylListProps) {
+  const searchParams = useSearchParams();
+
+  return (
+    <VinylListContent
+      {...props}
+      initialQuery={searchParams.get(SEARCH_PARAM) ?? ""}
+    />
+  );
+}
+
+export default function VinylList(props: VinylListProps) {
+  return (
+    <Suspense fallback={<VinylListContent {...props} initialQuery="" />}>
+      <VinylListWithParams {...props} />
+    </Suspense>
   );
 }

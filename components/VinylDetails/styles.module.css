@@ -88,3 +88,12 @@
     margin-right: 5px;
   }
 }
+
+.story {
+  margin-top: 10px;
+  padding-left: 14px;
+  border-left: 3px solid var(--accent-color);
+  font-size: 18px;
+  font-style: italic;
+  line-height: 1.4;
+}

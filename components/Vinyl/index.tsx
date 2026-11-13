@@ -12,10 +12,17 @@ export interface Vinylype {
 interface VinylProps extends Pick<Vinylype, "cover" | "color"> {
   isPlaying?: boolean;
   size?: number;
+  coverAlt?: string;
 }
 
 export default function Vinyl(props: VinylProps) {
-  const { cover, color, isPlaying = false, size = 300 } = props;
+  const {
+    cover,
+    color,
+    isPlaying = false,
+    size = 300,
+    coverAlt = "Capa do disco",
+  } = props;
 
   return (
     <div
@@ -32,7 +39,7 @@ export default function Vinyl(props: VinylProps) {
             width={size}
             height={size}
             src={cover}
-            alt="Vinyl Cover"
+            alt={coverAlt}
             className={styles.cover}
           />
         )}

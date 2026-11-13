@@ -7,7 +7,7 @@ export default function Loading() {
     <div className={styles.container}>
       <div className={styles.content}>
         <Vinyl isPlaying size={100} />
-        <h2>Loading...</h2>
+        <h2>Carregando...</h2>
       </div>
     </div>
   );

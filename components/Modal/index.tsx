@@ -36,6 +36,7 @@ export default function Modal({ children }: { children: React.ReactNode }) {
         <button
           onClick={() => dialogRef.current?.close()}
           className={styles.closeBtn}
+          aria-label="Fechar"
         >
           ✕
         </button>

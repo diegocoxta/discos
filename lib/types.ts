@@ -21,6 +21,7 @@ export interface Want {
   date_added: string;
   basic_information: BasicInformation;
   rating: number;
+  notes?: string;
 }
 
 export interface Release {
@@ -202,4 +203,11 @@ export interface Field {
   public: boolean;
   options?: string[];
   lines?: number;
+}
+
+export interface Profile {
+  name: string;
+  location: string;
+  avatar_url: string;
+  profile: string;
 }

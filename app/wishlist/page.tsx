@@ -1,24 +1,25 @@
+import type { Metadata } from "next";
+
 import Container from "@/components/Container";
-import Header from "@/components/Header";
+import SiteHeader from "@/components/SiteHeader";
 import VinylList from "@/components/VinylList";
 import Footer from "@/components/Footer";
 
-import { getCollection, getWishlist } from "@/lib/discogs";
+import { getWishlist } from "@/lib/discogs";
 
 export const revalidate = 3600;
 
+export const metadata: Metadata = {
+  title: "Lista de desejos",
+  description: "Os discos que ainda estou procurando.",
+};
+
 export default async function WishlistPage() {
-  const collection = await getCollection("0");
   const wishlist = await getWishlist();
 
   return (
     <Container>
-      <Header
-        counter={{
-          wishlist: wishlist.pagination.items,
-          collection: collection.pagination.items,
-        }}
-      />
+      <SiteHeader />
       <VinylList list={wishlist.wants} />
       <Footer />
     </Container>

@@ -6,6 +6,7 @@ import {
   Folder,
   Instance,
   Pagination,
+  Profile,
   ReleaseDetails,
   Want,
 } from "@/lib/types";
@@ -13,6 +14,7 @@ import {
 import { cleanName } from "@/lib/utils";
 
 const PER_PAGE = 100;
+const USERNAME = process.env.DISCOGS_USERNAME;
 
 const EMPTY_PAGINATION: Pagination = {
   page: 1,
@@ -86,7 +88,7 @@ export async function getCollection(
   folderid: string,
 ): Promise<GetCollectionType> {
   const data = await getAllPages<"releases", Instance>(
-    `users/diegocoxta/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
+    `users/${USERNAME}/collection/folders/${folderid}/releases?sort=added&sort_order=desc`,
     "releases",
   );
 
@@ -120,7 +122,7 @@ type GetWishlistType = ApiResponse & {
 
 export async function getWishlist(): Promise<GetWishlistType> {
   return getAllPages<"wants", Want>(
-    "users/diegocoxta/wants?sort=added&sort_order=desc",
+    `users/${USERNAME}/wants?sort=added&sort_order=desc`,
     "wants",
   );
 }
@@ -129,7 +131,7 @@ type GetFoldersType = { folders: Folder[] };
 
 export async function getFolders(): Promise<GetFoldersType> {
   const data = await getResource<GetFoldersType>(
-    "users/diegocoxta/collection/folders",
+    `users/${USERNAME}/collection/folders`,
   );
 
   return data ?? { folders: [] };
@@ -144,7 +146,7 @@ export async function getInstance(
   instanceid: string,
 ): Promise<Instance | null> {
   return getResource<Instance>(
-    `users/diegocoxta/collection/folders/0/releases/${id}/instances/${instanceid}`,
+    `users/${USERNAME}/collection/folders/0/releases/${id}/instances/${instanceid}`,
   );
 }
 
@@ -152,8 +154,12 @@ type GetCustomFields = { fields: Field[] };
 
 export async function getCustomFields(): Promise<GetCustomFields> {
   const data = await getResource<GetCustomFields>(
-    `users/diegocoxta/collection/fields`,
+    `users/${USERNAME}/collection/fields`,
   );
 
   return data ?? { fields: [] };
+}
+
+export async function getProfile(): Promise<Profile | null> {
+  return getResource<Profile>(`users/${USERNAME}`);
 }
