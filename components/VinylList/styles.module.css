@@ -47,13 +47,50 @@
   margin-top: 5px;
 }
 
-.searchContainer {
+.searchRow {
+  display: flex;
+  align-items: stretch;
+  gap: 10px;
   width: 80%;
   margin: 0px auto 50px;
-  position: relative;
 
   @media (min-width: 786px) {
     width: 50%;
+  }
+}
+
+.searchContainer {
+  flex: 1;
+  min-width: 0;
+  position: relative;
+}
+
+.shuffle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  aspect-ratio: 1;
+  border: 0;
+  border-radius: 50%;
+  background-color: var(--text-color);
+  color: #fff;
+  cursor: pointer;
+  transition: all 0.2s ease-in;
+
+  &:hover:not(:disabled) {
+    background-color: var(--accent-color);
+    transform: rotate(10deg);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+  }
+
+  svg {
+    width: 22px;
+    height: 22px;
   }
 }
 

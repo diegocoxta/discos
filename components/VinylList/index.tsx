@@ -2,8 +2,9 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import Fuse from "fuse.js";
-import { Search, X } from "lucide-react";
+import { Search, Shuffle, X } from "lucide-react";
 
 import Sleeve from "@/components/Sleeve";
 
@@ -43,8 +44,15 @@ function search(
 }
 
 export default function VinylList(props: VinylListProps) {
+  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState("");
   const list = search(props.list, searchQuery);
+
+  function openRandomRecord() {
+    const record = list[Math.floor(Math.random() * list.length)];
+
+    router.push(createVinylLink(record));
+  }
 
   const customFieldColorId = props.customFields?.find(
     (field) => field.name === "Color",
@@ -52,20 +60,32 @@ export default function VinylList(props: VinylListProps) {
 
   return (
     <>
-      <div className={styles.searchContainer}>
-        <input
-          type="text"
-          className={styles.searchBar}
-          value={searchQuery}
-          placeholder="Busque por título, artista, gênero, estilo, ano etc."
-          onChange={(e) => setSearchQuery(e.currentTarget.value)}
-        />
-        <div className={styles.searchIcon}>
-          {searchQuery !== "" && (
-            <X onClick={() => setSearchQuery("")} data-clickable />
-          )}
-          {searchQuery === "" && <Search />}
+      <div className={styles.searchRow}>
+        <div className={styles.searchContainer}>
+          <input
+            type="text"
+            className={styles.searchBar}
+            value={searchQuery}
+            placeholder="Busque por título, artista, gênero, estilo, ano etc."
+            onChange={(e) => setSearchQuery(e.currentTarget.value)}
+          />
+          <div className={styles.searchIcon}>
+            {searchQuery !== "" && (
+              <X onClick={() => setSearchQuery("")} data-clickable />
+            )}
+            {searchQuery === "" && <Search />}
+          </div>
         </div>
+        <button
+          type="button"
+          className={styles.shuffle}
+          onClick={openRandomRecord}
+          disabled={list.length === 0}
+          aria-label="Abrir um disco aleatório"
+          title="Abrir um disco aleatório"
+        >
+          <Shuffle />
+        </button>
       </div>
       <ul className={styles.list}>
         {list.length === 0 && (
