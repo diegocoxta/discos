@@ -55,6 +55,10 @@ export default function VinylList(props: VinylListProps) {
     router.push(createVinylLink(record));
   }
 
+  const placeholder = props.heading
+    ? `Buscar em ${props.heading.title} (${props.heading.count} ${props.heading.count === 1 ? "disco" : "discos"})`
+    : "Busque por título, artista, gênero, estilo, ano etc.";
+
   const customFieldColorId = props.customFields?.find(
     (field) => field.name === "Color",
   )?.id;
@@ -67,7 +71,7 @@ export default function VinylList(props: VinylListProps) {
             type="text"
             className={styles.searchBar}
             value={searchQuery}
-            placeholder="Busque por título, artista, gênero, estilo, ano etc."
+            placeholder={placeholder}
             onChange={(e) => setSearchQuery(e.currentTarget.value)}
           />
           <div className={styles.searchIcon}>
