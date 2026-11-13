@@ -54,11 +54,6 @@ export default async function RootPage() {
         records={listItems.slice(0, 8)}
         colorFieldId={customFieldColorId}
       />
-      <Highlights
-        title="Favoritos"
-        records={listItems.filter((release) => release.rating === 5).slice(0, 8)}
-        colorFieldId={customFieldColorId}
-      />
       <VinylList list={listItems} customFields={customFields.fields} />
       <Filters folders={folders.folders} />
       <Footer />
