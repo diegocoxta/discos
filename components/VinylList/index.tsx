@@ -2,7 +2,7 @@
 
 import { Suspense, useState } from "react";
 import Link from "next/link";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import Fuse from "fuse.js";
 import { Search, Shuffle, X } from "lucide-react";
 
@@ -16,6 +16,7 @@ import styles from "./styles.module.css";
 interface VinylListProps {
   customFields?: Field[];
   list: Want[] | Instance[];
+  randomHref?: string;
   heading?: { title: string; count: number };
 }
 
@@ -47,7 +48,6 @@ function search(
 const SEARCH_PARAM = "s";
 
 function VinylListContent(props: VinylListProps & { initialQuery: string }) {
-  const router = useRouter();
   const [searchQuery, setSearchQuery] = useState(props.initialQuery);
   const list = search(props.list, searchQuery);
 
@@ -62,12 +62,6 @@ function VinylListContent(props: VinylListProps & { initialQuery: string }) {
 
     window.history.replaceState(null, "", url);
     setSearchQuery(value);
-  }
-
-  function openRandomRecord() {
-    const record = list[Math.floor(Math.random() * list.length)];
-
-    router.push(createVinylLink(record));
   }
 
   const placeholder = props.heading
@@ -96,16 +90,15 @@ function VinylListContent(props: VinylListProps & { initialQuery: string }) {
             {searchQuery === "" && <Search />}
           </div>
         </div>
-        <button
-          type="button"
+        <Link
+          href={props.randomHref ?? "/random"}
+          prefetch={false}
           className={styles.shuffle}
-          onClick={openRandomRecord}
-          disabled={list.length === 0}
           aria-label="Abrir um disco aleatório"
           title="Abrir um disco aleatório"
         >
           <Shuffle />
-        </button>
+        </Link>
       </div>
       <ul className={styles.list}>
         {list.length === 0 && (

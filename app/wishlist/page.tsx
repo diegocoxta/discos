@@ -20,7 +20,7 @@ export default async function WishlistPage() {
   return (
     <Container>
       <SiteHeader />
-      <VinylList list={wishlist.wants} />
+      <VinylList list={wishlist.wants} randomHref="/wishlist/random" />
       <Footer />
     </Container>
   );

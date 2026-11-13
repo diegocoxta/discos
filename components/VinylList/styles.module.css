@@ -79,17 +79,12 @@
   cursor: pointer;
   transition: transform 0.2s;
 
-  &:hover:not(:disabled) {
+  &:hover {
     transform: scale(1.05);
   }
 
-  &:active:not(:disabled) {
+  &:active {
     transform: scale(0.95);
-  }
-
-  &:disabled {
-    opacity: 0.4;
-    cursor: not-allowed;
   }
 
   svg {
