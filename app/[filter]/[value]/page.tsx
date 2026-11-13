@@ -82,6 +82,7 @@ export default async function FilterPage(props: FilterPageProps) {
     <VinylList
       list={list}
       customFields={customFields.fields}
+      randomHref={folder ? `/random?folder=${folder.id}` : undefined}
       heading={
         folder && {
           title: FOLDER_NAMES[folder.name.toLowerCase()] ?? folder.name,
