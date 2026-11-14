@@ -41,7 +41,13 @@ function getStoreLinks(release: ReleaseDetails) {
     i: "popular",
   });
 
+  const googleQuery = new URLSearchParams({ q: `${term} vinil` });
+
   return [
+    {
+      name: "Google",
+      href: `https://www.google.com/search?${googleQuery}`,
+    },
     {
       name: "Mercado Livre BR",
       href: `https://lista.mercadolivre.com.br/musica-filmes-seriados/musica/vinil/${termSlug}_NoIndex_True`,
