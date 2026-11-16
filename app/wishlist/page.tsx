@@ -7,7 +7,7 @@ import Footer from "@/components/Footer";
 
 import { getWishlist } from "@/lib/discogs";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Lista de desejos",

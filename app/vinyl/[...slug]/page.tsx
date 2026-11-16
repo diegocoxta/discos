@@ -4,7 +4,7 @@ import VinylDetails from "@/components/VinylDetails";
 
 import { getCustomFields, getInstance, getRelease } from "@/lib/discogs";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 export const dynamicParams = true;
 
 interface VinylPageProps {

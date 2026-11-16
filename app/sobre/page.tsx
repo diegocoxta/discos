@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import { getCollection, getWishlist } from "@/lib/discogs";
 import { getCollectionStats } from "@/lib/utils";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export const metadata: Metadata = {
   title: "Sobre a coleção",

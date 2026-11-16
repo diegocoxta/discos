@@ -5,7 +5,7 @@ import VinylList from "@/components/VinylList";
 import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
 import { cleanName, slug, sortByAcquisition } from "@/lib/utils";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 export const dynamicParams = true;
 
 const FOLDER_NAMES: Record<string, string> = {

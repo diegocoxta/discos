@@ -12,7 +12,7 @@ import {
 
 import { sortByAcquisition } from "@/lib/utils";
 
-export const revalidate = 3600;
+export const revalidate = 300;
 
 export default async function RootPage() {
   const collection = await getCollection("0");

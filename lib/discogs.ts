@@ -30,7 +30,7 @@ async function getResource<T>(url: string): Promise<T | null> {
       headers: {
         Authorization: `Discogs token=${process.env.DISCOGS_TOKEN}`,
       },
-      next: { revalidate: 3600, tags: ['discogs'] },
+      next: { revalidate: 300, tags: ['discogs'] },
     });
 
     if (!request.ok) {
