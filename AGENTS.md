@@ -32,7 +32,7 @@ Run `yarn lint` and `yarn build`. Both must pass.
 
 A read-only site over one person's [Discogs](https://www.discogs.com) account. There is no database and no auth. UI text is hardcoded in Brazilian Portuguese (no i18n layer).
 
-- **Data layer:** [`lib/discogs.ts`](lib/discogs.ts) is the only place that talks to the Discogs API. `getResource` fails soft (logs and returns `null`) and `getAllPages` walks pagination, so a Discogs outage or rate limit (429) renders empty pages instead of crashing. Responses are cached for an hour under the `discogs` tag. The user comes from `DISCOGS_USERNAME`; the name, avatar and bio shown across the site come from the Discogs profile (`getProfile`), never hardcoded.
+- **Data layer:** [`lib/discogs.ts`](lib/discogs.ts) is the only place that talks to the Discogs API. `getResource` fails soft (logs and returns `null`) and `getAllPages` walks pagination, so a Discogs outage or rate limit (429) renders empty pages instead of crashing. Responses are cached for 5 minutes under the `discogs` tag. The user comes from `DISCOGS_USERNAME`; the name, avatar and bio shown across the site come from the Discogs profile (`getProfile`), never hardcoded.
 - **Routes** (all under [`app/`](app)):
   - [`page.tsx`](app/page.tsx) — whole collection. [`wishlist/`](app/wishlist/page.tsx) and [`sobre/`](app/sobre/page.tsx) (stats) are the other top-level pages.
   - [`[filter]/[value]/`](app/[filter]/[value]/page.tsx) — `folder`, `artist` and `style` listings, pre-rendered with `generateStaticParams`.

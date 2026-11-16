@@ -13,7 +13,7 @@ Discogs is great for cataloging, but its interface isn't the nicest way to brows
 
 ## Features
 
-- **Collection and wishlist**, read live from the Discogs API and cached for one hour.
+- **Collection and wishlist**, read live from the Discogs API and cached for 5 minutes.
 - **Search** by title, artist, genre, style or year. The query lives in the URL (`/?s=rosalia`), so a search can be shared.
 - **Folders** from your Discogs collection, plus artist and style routes.
 - **Record details** in a modal (or a full page when opened directly): tracklist, styles, and your own copy's notes, such as acquisition date, sleeve condition and vinyl color.
