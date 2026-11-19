@@ -15,6 +15,7 @@ interface VinylDetailsProps {
   instance?: Instance;
   customFields?: Field[];
   showStores?: boolean;
+  appleMusicUrl?: string;
 }
 
 const FIELD_LABELS: Record<string, string> = {
@@ -67,6 +68,21 @@ function getStoreLinks(release: ReleaseDetails) {
   ];
 }
 
+function getExternalLinks(release: ReleaseDetails, appleMusicUrl?: string) {
+  const appleMusicQuery = new URLSearchParams({
+    term: `${cleanName(release.artists[0].name)} ${release.title}`,
+  });
+
+  return [
+    { name: "Discogs", href: release.uri },
+    {
+      name: "Apple Music",
+      href:
+        appleMusicUrl ?? `https://music.apple.com/search?${appleMusicQuery}`,
+    },
+  ];
+}
+
 export default function VinylDetails(props: VinylDetailsProps) {
   const notes = mergeNoteData(props.instance?.notes, props.customFields);
   const color = notes?.find((note) => note.name === "Color")?.value;
@@ -111,6 +127,20 @@ export default function VinylDetails(props: VinylDetailsProps) {
           </div>
         )}
         {story && <blockquote className={styles.story}>{story}</blockquote>}
+        {props.release && (
+          <div className={styles.links}>
+            {getExternalLinks(props.release, props.appleMusicUrl).map((link) => (
+              <a
+                key={link.name}
+                href={link.href}
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                Ver no {link.name}
+              </a>
+            ))}
+          </div>
+        )}
         {props.release?.tracklist.length > 0 && (
           <div className={styles.tracklist}>
             <h3>Faixas</h3>
