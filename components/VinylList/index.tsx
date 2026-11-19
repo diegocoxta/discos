@@ -146,9 +146,6 @@ function VinylListContent(props: VinylListProps & { initialQuery: string }) {
                 {"instance_id" in record ? "Adquirido" : "Adicionado"} em{" "}
                 {formatDate(record.date_added)}
               </p>
-              {!("instance_id" in record) && record.notes && (
-                <p className={styles.note}>“{record.notes}”</p>
-              )}
             </li>
           );
         })}
