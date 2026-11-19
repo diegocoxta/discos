@@ -2,9 +2,12 @@ import { notFound } from "next/navigation";
 
 import VinylDetails from "@/components/VinylDetails";
 
-import { getAppleMusicAlbumUrl } from "@/lib/appleMusic";
-import { getCustomFields, getInstance, getRelease } from "@/lib/discogs";
-import { cleanName } from "@/lib/utils";
+import {
+  getCustomFields,
+  getInstance,
+  getRelease,
+  getWishlist,
+} from "@/lib/discogs";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -25,16 +28,19 @@ export default async function VinylPage(props: VinylPageProps) {
     notFound();
   }
 
-  const appleMusicUrl = await getAppleMusicAlbumUrl(
-    `${cleanName(vinyl.artists[0].name)} ${vinyl.title}`,
-  );
-
   let customFields = undefined;
   let instance = undefined;
+  let streamingUrl = undefined;
 
   if (slug.length > 2) {
     instance = (await getInstance(id, instanceid)) ?? undefined;
     customFields = await getCustomFields();
+  } else {
+    // Wishlist items have no custom fields, so their link lives in the notes.
+    const want = (await getWishlist()).wants.find(
+      (want) => String(want.id) === id,
+    );
+    streamingUrl = want?.notes?.match(/https?:\/\/\S+/)?.[0];
   }
 
   return (
@@ -43,7 +49,7 @@ export default async function VinylPage(props: VinylPageProps) {
       instance={instance}
       customFields={customFields?.fields}
       showStores={slug.length <= 2}
-      appleMusicUrl={appleMusicUrl ?? undefined}
+      streamingUrl={streamingUrl}
     />
   );
 }

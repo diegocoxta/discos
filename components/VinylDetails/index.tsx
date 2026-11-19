@@ -1,3 +1,5 @@
+import { Play } from "lucide-react";
+
 import Sleeve from "@/components/Sleeve";
 
 import { Field, Instance, ReleaseDetails } from "@/lib/types";
@@ -15,7 +17,7 @@ interface VinylDetailsProps {
   instance?: Instance;
   customFields?: Field[];
   showStores?: boolean;
-  appleMusicUrl?: string;
+  streamingUrl?: string;
 }
 
 const FIELD_LABELS: Record<string, string> = {
@@ -27,6 +29,16 @@ const FIELD_LABELS: Record<string, string> = {
 };
 
 const STORY_FIELD = "Story";
+const STREAMING_FIELD = "Streaming";
+const HIDDEN_FIELDS = [STORY_FIELD, STREAMING_FIELD];
+
+const STREAMING_SERVICES: Record<string, string> = {
+  "music.apple.com": "Apple Music",
+  "open.spotify.com": "Spotify",
+  "music.youtube.com": "YouTube Music",
+  "tidal.com": "Tidal",
+  "www.deezer.com": "Deezer",
+};
 
 function getStoreLinks(release: ReleaseDetails) {
   const term = `${cleanName(release.artists[0].name)} ${release.title}`;
@@ -68,28 +80,20 @@ function getStoreLinks(release: ReleaseDetails) {
   ];
 }
 
-function getExternalLinks(release: ReleaseDetails, appleMusicUrl?: string) {
-  const appleMusicQuery = new URLSearchParams({
-    term: `${cleanName(release.artists[0].name)} ${release.title}`,
-  });
-
-  return [
-    { name: "Discogs", href: release.uri },
-    {
-      name: "Apple Music",
-      href:
-        appleMusicUrl ?? `https://music.apple.com/search?${appleMusicQuery}`,
-    },
-  ];
-}
-
 export default function VinylDetails(props: VinylDetailsProps) {
   const notes = mergeNoteData(props.instance?.notes, props.customFields);
   const color = notes?.find((note) => note.name === "Color")?.value;
   const fields = notes
-    ?.filter((field) => field.public && field.name !== STORY_FIELD)
+    ?.filter((field) => field.public && !HIDDEN_FIELDS.includes(field.name!))
     .sort((a, b) => a.position! - b.position!);
   const story = notes?.find((note) => note.name === STORY_FIELD)?.value;
+  const streamingUrl =
+    props.streamingUrl ??
+    notes?.find((note) => note.name === STREAMING_FIELD)?.value?.trim();
+  const streamingService =
+    streamingUrl && URL.canParse(streamingUrl)
+      ? (STREAMING_SERVICES[new URL(streamingUrl).hostname] ?? "streaming")
+      : undefined;
 
   return (
     <div
@@ -129,16 +133,24 @@ export default function VinylDetails(props: VinylDetailsProps) {
         {story && <blockquote className={styles.story}>{story}</blockquote>}
         {props.release && (
           <div className={styles.links}>
-            {getExternalLinks(props.release, props.appleMusicUrl).map((link) => (
+            <a
+              href={props.release.uri}
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Ver no Discogs
+            </a>
+            {streamingService && (
               <a
-                key={link.name}
-                href={link.href}
+                href={streamingUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                title={`Ouvir no ${streamingService}`}
               >
-                Ver no {link.name}
+                <Play size={14} fill="currentColor" aria-hidden />
+                Ouvir
               </a>
-            ))}
+            )}
           </div>
         )}
         {props.release?.tracklist.length > 0 && (

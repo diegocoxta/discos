@@ -17,6 +17,9 @@
   margin-top: 20px;
 
   a {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
     padding: 8px 14px;
     border: 1px solid var(--accent-color);
     border-radius: 999px;
