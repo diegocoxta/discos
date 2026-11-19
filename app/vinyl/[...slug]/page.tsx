@@ -2,7 +2,9 @@ import { notFound } from "next/navigation";
 
 import VinylDetails from "@/components/VinylDetails";
 
+import { getAppleMusicAlbumUrl } from "@/lib/appleMusic";
 import { getCustomFields, getInstance, getRelease } from "@/lib/discogs";
+import { cleanName } from "@/lib/utils";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -23,6 +25,10 @@ export default async function VinylPage(props: VinylPageProps) {
     notFound();
   }
 
+  const appleMusicUrl = await getAppleMusicAlbumUrl(
+    `${cleanName(vinyl.artists[0].name)} ${vinyl.title}`,
+  );
+
   let customFields = undefined;
   let instance = undefined;
 
@@ -37,6 +43,7 @@ export default async function VinylPage(props: VinylPageProps) {
       instance={instance}
       customFields={customFields?.fields}
       showStores={slug.length <= 2}
+      appleMusicUrl={appleMusicUrl ?? undefined}
     />
   );
 }
