@@ -38,6 +38,32 @@ export function sortByAcquisition(
     );
 }
 
+const collator = new Intl.Collator("pt-BR", {
+  sensitivity: "base",
+  numeric: true,
+});
+
+// Leading punctuation is dropped so "¿Será Posible El Sur?" sorts under S.
+function sortKey(value: string) {
+  return value.replace(/^[^\p{L}\p{N}]+/u, "");
+}
+
+export function sortAlphabetically<T extends Want | Instance>(
+  releases: T[],
+): T[] {
+  return releases.toSorted(
+    (a, b) =>
+      collator.compare(
+        sortKey(cleanName(a.basic_information.artists[0].name)),
+        sortKey(cleanName(b.basic_information.artists[0].name)),
+      ) ||
+      collator.compare(
+        sortKey(a.basic_information.title),
+        sortKey(b.basic_information.title),
+      ),
+  );
+}
+
 export function mergeNoteData(notes?: Note[], customFields?: Field[]) {
   return (
     notes &&
@@ -67,9 +93,7 @@ function countBy(values: string[]) {
 export function getCollectionStats(releases: Instance[]) {
   const artists = countBy(
     releases.flatMap((release) =>
-      release.basic_information.artists.map((artist) =>
-        cleanName(artist.name),
-      ),
+      release.basic_information.artists.map((artist) => cleanName(artist.name)),
     ),
   );
 
@@ -77,8 +101,7 @@ export function getCollectionStats(releases: Instance[]) {
     releases
       .filter((release) => release.basic_information.year > 0)
       .map(
-        (release) =>
-          `${Math.floor(release.basic_information.year / 10) * 10}s`,
+        (release) => `${Math.floor(release.basic_information.year / 10) * 10}s`,
       ),
   );
 
