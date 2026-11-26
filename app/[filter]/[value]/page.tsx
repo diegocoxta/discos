@@ -3,7 +3,12 @@ import { notFound } from "next/navigation";
 import VinylList from "@/components/VinylList";
 
 import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
-import { cleanName, slug, sortByAcquisition } from "@/lib/utils";
+import {
+  cleanName,
+  slug,
+  sortAlphabetically,
+  sortByAcquisition,
+} from "@/lib/utils";
 
 export const revalidate = 300;
 export const dynamicParams = true;
@@ -55,23 +60,25 @@ export default async function FilterPage(props: FilterPageProps) {
     (field) => field.name === "Acquisition Date",
   )?.id;
 
-  const list = sortByAcquisition(
-    collection.releases.filter((release) => {
-      if (filter === "artist") {
-        return release.basic_information.artists.some(
-          (artist) => slug(cleanName(artist.name)) === slug(value),
-        );
-      }
+  const list = sortAlphabetically(
+    sortByAcquisition(
+      collection.releases.filter((release) => {
+        if (filter === "artist") {
+          return release.basic_information.artists.some(
+            (artist) => slug(cleanName(artist.name)) === slug(value),
+          );
+        }
 
-      if (filter === "style") {
-        return release.basic_information.styles.some(
-          (style) => slug(style) === slug(value),
-        );
-      }
+        if (filter === "style") {
+          return release.basic_information.styles.some(
+            (style) => slug(style) === slug(value),
+          );
+        }
 
-      return true;
-    }),
-    customFieldDateId,
+        return true;
+      }),
+      customFieldDateId,
+    ),
   );
 
   if (list.length === 0) {

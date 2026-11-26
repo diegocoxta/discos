@@ -4,13 +4,9 @@ import VinylList from "@/components/VinylList";
 import Filters from "@/components/Filters";
 import Footer from "@/components/Footer";
 
-import {
-  getCollection,
-  getCustomFields,
-  getFolders,
-} from "@/lib/discogs";
+import { getCollection, getCustomFields, getFolders } from "@/lib/discogs";
 
-import { sortByAcquisition } from "@/lib/utils";
+import { sortAlphabetically, sortByAcquisition } from "@/lib/utils";
 
 export const revalidate = 300;
 
@@ -23,9 +19,8 @@ export default async function RootPage() {
     (field) => field.name === "Acquisition Date",
   )?.id;
 
-  const listItems = sortByAcquisition(
-    collection.releases,
-    customFieldDateId,
+  const listItems = sortAlphabetically(
+    sortByAcquisition(collection.releases, customFieldDateId),
   );
 
   return (
