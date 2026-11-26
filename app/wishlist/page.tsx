@@ -6,6 +6,7 @@ import VinylList from "@/components/VinylList";
 import Footer from "@/components/Footer";
 
 import { getWishlist } from "@/lib/discogs";
+import { sortAlphabetically } from "@/lib/utils";
 
 export const revalidate = 300;
 
@@ -20,7 +21,10 @@ export default async function WishlistPage() {
   return (
     <Container>
       <SiteHeader />
-      <VinylList list={wishlist.wants} randomHref="/wishlist/random" />
+      <VinylList
+        list={sortAlphabetically(wishlist.wants)}
+        randomHref="/wishlist/random"
+      />
       <Footer />
     </Container>
   );
